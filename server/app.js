@@ -19,12 +19,12 @@ var queries = require('./model/queries.js');
 
 
 app.get('/', function (req, res) {
-  res.send(path.join(__dirname, 'views', 'login.ejs'));
+  res.send("login");
   //queries.addUser("salut", "salut");
 
 });
 app.get("/homeUser", function (req, res) {
-  res.render(path.join(__dirname, 'views', 'homeUser.ejs'));
+  res.send("homeUser");
 });
 
 
