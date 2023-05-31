@@ -1,42 +1,74 @@
-var createError = require('http-errors');
 var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var cors = require ('cors');
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
 var app = express();
+var path = require('path');
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+var tabTasks = [];
 
-//USES
-app.use(logger('dev'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+const cors = require("cors");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors ());
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use(cors());
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+var queries = require('./model/queries.js');
+
+
+app.get('/', function (req, res) {
+  res.send(path.join(__dirname, 'views', 'login.ejs'));
+  //queries.addUser("salut", "salut");
+
+});
+app.get("/homeUser", function (req, res) {
+  res.render(path.join(__dirname, 'views', 'homeUser.ejs'));
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+/*
+app.post("/create", (req, res) => {
+  const newPost = new Post({
+    title: req.body.title,
+    description: req.body.description,
+  });
+ 
+  newPost
+    .save()
+    .then((doc) => console.log(doc))
+    .catch((err) => console.log(err));
 });
+ 
+app.get("/posts", (req, res) => {
+  Post.find()
+    .then((items) => res.json(items))
+    .catch((err) => console.log(err));
+});
+ 
+app.delete("/delete/:id", (req, res) => {
+  console.log(req.params);
+  Post.findByIdAndDelete({ _id: req.params.id })
+    .then((doc) => console.log(doc))
+    .catch((err) => console.log(err));
+});
+ 
+app.put("/update/:id", (req, res) => {
+  Post.findByIdAndUpdate(
+    { _id: req.params.id },
+    {
+      title: req.body.title,
+      description: req.body.description,
+    }
+  )
+    .then((doc) => console.log(doc))
+    .catch((err) => console.log(err));
+});
+*/
+app.listen(3001, function () {
+  console.log("Express server is running");
+});
+
 
 module.exports = app;
