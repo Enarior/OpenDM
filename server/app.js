@@ -18,12 +18,12 @@ app.set('view engine', 'ejs');
 var queries = require('./model/queries.js');
 
 
-app.get('/', function (req, res) {
+app.get('/api/login', function (req, res) {
   res.send("login");
   //queries.addUser("salut", "salut");
 
 });
-app.get("/homeUser", function (req, res) {
+app.get("/api/homeUser", function (req, res) {
   res.send("homeUser");
 });
 
