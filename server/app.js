@@ -14,12 +14,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+//var queries = require('./model/queries.js');
 
-var queries = require('./model/queries.js');
 
+app.post('/api/login', function (req, res) {
+  //QUERIES DB POUR TESTER LE REQ.BODY.USERNAME ET REQ.BODY.PASSWORD sont OK dans la DB
 
-app.get('/api/login', function (req, res) {
-  res.send("login");
+  //Ensuite si cest ok on renvoie un res.json({logged : true})
+
+  //Sinon on renvoie un res.json({logged : false})
+
+  res.json({ logged : true });
   //queries.addUser("salut", "salut");
 
 });
