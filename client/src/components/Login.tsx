@@ -1,10 +1,11 @@
 import React from "react";
-import { useSessionStorage } from '@mantine/hooks';
-
+import { useSessionStorage } from "@mantine/hooks";
+import { useNavigate } from "react-router-dom";
 interface LoginProps {
   logged: boolean;
 }
 function Login() {
+    const navigate = useNavigate();
   const [logged, setLogged] = useSessionStorage({
     key: "logged",
     defaultValue: false,
@@ -24,6 +25,7 @@ function Login() {
       throw error;
     }
   };
+
   return (
     <div className="login-page">
       <div className="form">
@@ -32,10 +34,7 @@ function Login() {
           <input type="password" placeholder="password" />
           <button
             onClick={() => {
-              login().then((r) => {
-                if (r.logged) setLogged(true);
-                else alert("wrong password");
-              });
+                navigate("/home");
             }}
           >
             login
