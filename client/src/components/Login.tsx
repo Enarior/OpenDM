@@ -5,7 +5,7 @@ interface LoginProps {
   logged: boolean;
 }
 function Login() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [logged, setLogged] = useSessionStorage({
     key: "logged",
     defaultValue: false,
@@ -25,7 +25,9 @@ function Login() {
       throw error;
     }
   };
-
+  login().then((r) => {
+    setLogged(r.logged);
+    });
   return (
     <div className="login-page">
       <div className="form">
@@ -34,8 +36,13 @@ function Login() {
           <input type="password" placeholder="password" />
           <button
             onClick={() => {
-                navigate("/home");
-            }}
+                if (logged) {
+                  navigate("/home");
+                } else {
+                   navigate("/");
+                  alert("not logged in");
+                }
+                }}
           >
             login
           </button>
