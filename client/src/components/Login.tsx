@@ -1,8 +1,15 @@
 import React from "react";
+import { useSessionStorage } from '@mantine/hooks';
+
 interface LoginProps {
   logged: boolean;
 }
 function Login() {
+  const [logged, setLogged] = useSessionStorage({
+    key: "logged",
+    defaultValue: false,
+  });
+
   const login = async (): Promise<LoginProps> => {
     try {
       const r = await fetch("http://localhost:9000/api/login", {
@@ -26,10 +33,8 @@ function Login() {
           <button
             onClick={() => {
               login().then((r) => {
-                if(r.logged)
-                  alert("logged in");
-                else
-                  alert("not logged in");
+                if (r.logged) setLogged(true);
+                else alert("wrong password");
               });
             }}
           >

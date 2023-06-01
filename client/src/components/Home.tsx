@@ -1,9 +1,8 @@
 import React,{useState} from 'react';
-import './App.css';
-import Login from './components/Login';
-import {BrowserRouter as Router,  Navigate,  Route,  Routes,} from "react-router-dom";
 import { useSessionStorage } from '@mantine/hooks';
-function App() {
+import './App.css';
+
+function Home() {
 
   const [logged, setLogged] = useSessionStorage({ key: 'logged', defaultValue: false });
   console.log(logged);
@@ -18,4 +17,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
