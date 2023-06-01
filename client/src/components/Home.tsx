@@ -4,7 +4,6 @@ import { useSessionStorage } from '@mantine/hooks';
 function Home() {
 
   const [logged, setLogged] = useSessionStorage({ key: 'logged', defaultValue: false });
-  console.log(logged);
   return (
     <div className="wrapper">
             <header>

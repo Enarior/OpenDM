@@ -25,9 +25,7 @@ function Login() {
       throw error;
     }
   };
-  login().then((r) => {
-    setLogged(r.logged);
-    });
+
   return (
     <div className="login-page">
       <div className="form">
@@ -36,13 +34,11 @@ function Login() {
           <input type="password" placeholder="password" />
           <button
             onClick={() => {
-                if (logged) {
-                  navigate("/home");
-                } else {
-                   navigate("/");
-                  alert("not logged in");
-                }
-                }}
+              login().then((r) => {
+                console.log(r)
+                
+              });
+            }}
           >
             login
           </button>

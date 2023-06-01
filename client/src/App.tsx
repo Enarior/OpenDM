@@ -7,7 +7,6 @@ import { useSessionStorage } from '@mantine/hooks';
 function App() {
 
   const [logged, setLogged] = useSessionStorage({ key: 'logged', defaultValue: false });
-  console.log(logged);
   return (
     <Router>
       <Routes>

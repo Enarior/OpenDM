@@ -12,8 +12,7 @@ const cors = require("cors");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+  
 //var queries = require('./model/queries.js');
 
 
