@@ -3,16 +3,24 @@ var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
 const cors = require("cors");
-var tabTasks = [];
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors());//var queries = require('./model/queries.js');
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+var queries = require('../model/queries.js');
 
 app.post("/", function (req, res) {
   console.log("Hello World!");
 });
+
+app.post('/api/register', function (req, res) {
+
+  res.json({ logged : true });
+  queries.addUser("salut", "salut");
+
+});
+
 
 app.post('/api/login', function (req, res) {
   //QUERIES DB POUR TESTER LE REQ.BODY.USERNAME ET REQ.BODY.PASSWORD sont OK dans la DB
@@ -20,6 +28,14 @@ app.post('/api/login', function (req, res) {
   //Ensuite si cest ok on renvoie un res.json({logged : true})
 
   //Sinon on renvoie un res.json({logged : false})
+
+  queries.getUser(req.body.password, req.body.email, function (result) {
+    if (result) {
+      res.json({ logged : true });
+    } else {
+      res.json({ logged : false });
+    }
+  });
 
   res.json({ logged : true });
   //queries.addUser("salut", "salut");

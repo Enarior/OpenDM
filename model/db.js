@@ -3,6 +3,7 @@ const PORT = 27017;
 const DB_NAME = "kmn";
 var connection = mongoose.connect(`mongodb://localhost:${PORT}/${DB_NAME}`);
 
+// OLD DEPRECATED USELESSE FILE LUL
 //Debug mongoose
 function mongooseStatus() {
 	switch (mongoose.connection.readyState) {

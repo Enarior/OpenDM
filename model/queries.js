@@ -1,11 +1,10 @@
-var db = require('./db.js');
-console.log(db);
-const User = db.UserModel;
-const Sheet = db.SheetModel;
-
+const User = require('./user.js');
+const Sheet = require('./sheet.js');
 //const { db, User, Sheet } = require('./db.js');
 
 //const SHA2 = require("sha2");
+// OLD DEPRECATED USELESSE FILE LUL
+
 
 module.exports = {
 
@@ -21,12 +20,18 @@ module.exports = {
 		console.log("Adding sheet : " + sheet.name + " " + sheet.hp + " " + sheet.mana);
 		
 		await sheet.save();
-
-		db.query("INSERT INTO documentuser(documentpath, documentname, iduser) VALUES(?, ?, (SELECT iduser FROM users WHERE login = ?))", [path, name, login], function (err, results) {
-			if (err) throw err;
-			callback(true);
-		});
 	},
+
+	getUser: async function (name, callback) {
+		const user = await User.findOne({ username: name });
+
+		if(user){
+			res.json(user);
+		}
+	},
+
+
+	//---------------------------------------------
 
 	addDemande: function (login, texte, callback) {
 		db.query('SELECT iduser from demande WHERE iduser = (SELECT iduser FROM users WHERE login = ?) and done = TRUE', login, function (err, results) {
