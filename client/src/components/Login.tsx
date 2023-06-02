@@ -13,13 +13,14 @@ function Login() {
 
   const login = async (): Promise<LoginProps> => {
     try {
-      const r = await fetch("http://localhost:9000/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      return r.json();
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: 'React POST Request Example' })
+    };
+    const response = await fetch('http://localhost:9000/', requestOptions);
+    const data = await response.json();
+    return data;
     } catch (error) {
       console.error(error);
       throw error;
@@ -35,8 +36,6 @@ function Login() {
           <button
             onClick={() => {
               login().then((r) => {
-                console.log(r)
-                
               });
             }}
           >

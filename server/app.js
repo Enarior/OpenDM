@@ -2,19 +2,17 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
-app.use(bodyParser.json());
-
+const cors = require("cors");
 var tabTasks = [];
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.json());
-const cors = require("cors");
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cors());
-  
-//var queries = require('./model/queries.js');
+app.use(cors());//var queries = require('./model/queries.js');
+app.use(bodyParser.urlencoded({ extended: false }));
 
+
+app.post("/", function (req, res) {
+  console.log("Hello World!");
+});
 
 app.post('/api/login', function (req, res) {
   //QUERIES DB POUR TESTER LE REQ.BODY.USERNAME ET REQ.BODY.PASSWORD sont OK dans la DB
@@ -27,7 +25,7 @@ app.post('/api/login', function (req, res) {
   //queries.addUser("salut", "salut");
 
 });
-app.get("/api/homeUser", function (req, res) {
+app.get("/api/home", function (req, res) {
   res.send("homeUser");
 });
 
