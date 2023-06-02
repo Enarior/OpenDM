@@ -18,7 +18,7 @@ function Login() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: 'React POST Request Example' })
     };
-    const response = await fetch('http://localhost:9000/', requestOptions);
+    const response = await fetch('http://localhost:9000/api/login', requestOptions);
     const data = await response.json();
     return data;
     } catch (error) {
@@ -36,6 +36,14 @@ function Login() {
           <button
             onClick={() => {
               login().then((r) => {
+                if (r.logged){
+                  setLogged(true);
+                  navigate("/home");
+                } 
+                else{
+                  alert("wrong password");
+                  navigate("/login");
+                } 
               });
             }}
           >
