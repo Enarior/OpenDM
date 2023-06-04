@@ -3,7 +3,7 @@ import { useSessionStorage } from "@mantine/hooks";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Text,Button,NavLink } from "@mantine/core";
 import { IconHome2, IconGauge, IconChevronRight, IconActivity, IconCircleOff, IconAlertTriangle } from '@tabler/icons-react';
-
+import HomeWelcome from "./HomeWelcome";
 function Home() {
   const [logged, setLogged] = useSessionStorage({
     key: "logged",
@@ -21,23 +21,9 @@ function Home() {
     );
   }
   return (
-    <div className="wrapper">
-      <div
-        className="foreground"
-        style={{
-          height: "100vh",
-          width: "100vw",
-          backgroundImage: `url("../ressources/images/taverne.png")`,
-        }}
-      >
-        <button id="viewSheet">Voir mes fiches</button>
-        <button id="createSheet">Créer une fiche</button>
-      </div>
-      <h1>Welcome in your tavern !</h1>
-      <div id="containerSheet">
-        <article></article>
-      </div>
-      <div id="containerCreateSheet"></div>
+    <div className="wrapper" style={{width:"100%",height:"102%",backgroundImage:
+    "url(" + require("../ressources/images/taverne.png") + ")",}}>
+      <HomeWelcome />
     </div>
   );
 }

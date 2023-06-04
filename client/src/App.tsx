@@ -17,7 +17,6 @@ import { IconSun, IconMoonStars } from "@tabler/icons-react";
 import { useSessionStorage } from "@mantine/hooks";
 
 function App() {
-  
   ////////////////////////////////***DARK THEME */
   //Dark mode qui se stocke dans le local storage
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
@@ -38,11 +37,10 @@ function App() {
   ////////////////////////////////***ROUTING */
   
  
-console.log("totot " + logged)
   return (
     //MantineProvider permet de mettre en place le dark mode, on entoure tout le reste de l'application avec
     <MantineProvider
-      theme={{ colorScheme: colorScheme }}
+      theme={{ colorScheme: colorScheme}}
       withGlobalStyles
       withNormalizeCSS
     >
