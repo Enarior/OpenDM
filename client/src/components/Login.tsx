@@ -19,7 +19,7 @@ function Login() {
         body: JSON.stringify({ title: 'React POST Request Example' })
     };
     const response = await fetch('http://localhost:9000/api/login', requestOptions);
-    const data = await response.json();
+    const data =  response.json();
     return data;
     } catch (error) {
       console.error(error);

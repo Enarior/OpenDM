@@ -7,11 +7,10 @@ import {BrowserRouter as Router,  Navigate,  Route,  Routes,} from "react-router
 import { useSessionStorage } from '@mantine/hooks';
 function App() {
 
-  const [logged, setLogged] = useSessionStorage({ key: 'logged', defaultValue: false });
   return (
     <Router>
       <Routes>
-        <Route path="/" element={logged ? <Navigate to="/home" /> : <Navigate to="/login" />} />
+        <Route path="/" element={<Toto/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/home" element={<Home/>} />
       </Routes>
