@@ -1,32 +1,24 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 
 import Login from "./components/Login";
 import Home from "./components/Home";
-import Toto from "./components/Toto";
+
 import {
   BrowserRouter as Router,
   Navigate,
   Route,
   Routes,
+  useNavigate,
 } from "react-router-dom";
 import { useLocalStorage, useHotkeys } from "@mantine/hooks";
-import {
-  MantineProvider,
-  Center,
-  Button,
-  TextInput,
-  Card,
-  ColorScheme,
-  ColorSchemeProvider,
-  ActionIcon,
-  useMantineColorScheme,
-  Navbar,
-  Header,
-  AppShell,
+import {MantineProvider,  Center,  Button,  TextInput,  Card,  ColorScheme,  ColorSchemeProvider,  ActionIcon,  useMantineColorScheme,  Navbar,  Header,  AppShell,  Title,
 } from "@mantine/core";
 import { IconSun, IconMoonStars } from "@tabler/icons-react";
+import { useSessionStorage } from "@mantine/hooks";
 
 function App() {
+  
+  ////////////////////////////////***DARK THEME */
   //Dark mode qui se stocke dans le local storage
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: "mantine-color-scheme",
@@ -39,6 +31,14 @@ function App() {
   const dark = colorScheme === "dark";
   //Raccourci clavier pour changer le mode
   useHotkeys([["alt+b", () => toggleColorScheme()]]);
+  const [logged, setLogged] = useSessionStorage({
+    key: "logged",
+    defaultValue: false,
+  });
+  ////////////////////////////////***ROUTING */
+  
+ 
+console.log("totot " + logged)
   return (
     //MantineProvider permet de mettre en place le dark mode, on entoure tout le reste de l'application avec
     <MantineProvider
@@ -51,7 +51,10 @@ function App() {
         padding="md"
         header={
           <Header height={60} p="xs" style={{display:"flex",flexDirection:"row",alignItems:"center"}}>
-            <h1 style={{paddingRight:"88%"}}>OpenDM</h1>
+            <Title order={1} style={{paddingRight:"88%"}} 
+          variant="gradient"
+          gradient={{ from: "orange", to: "red" }}
+          >OpenDM</Title>
             <ActionIcon
               variant="outline"
               color={dark ? "yellow" : "blue"}
@@ -70,7 +73,7 @@ function App() {
       >
         <Router>
           <Routes>
-            <Route path="/" element={<Toto />} />
+            <Route path="/" element={<Navigate to="login"/>} />
             <Route path="/login" element={<Login />} />
             <Route path="/home" element={<Home />} />
           </Routes>

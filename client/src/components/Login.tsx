@@ -1,18 +1,35 @@
 import React from "react";
+import { useState, useEffect} from "react";
 import { useSessionStorage, useDisclosure } from "@mantine/hooks";
-import { Center, Button, TextInput, Card, Modal, Group,Text } from "@mantine/core";
+import {
+  Center,
+  Button,
+  TextInput,
+  Card,
+  Modal,
+  Group,
+  Text,
+  PasswordInput,
+} from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
 interface LoginProps {
   logged: boolean;
 }
 function Login() {
-  const navigate = useNavigate();
+  
   const [logged, setLogged] = useSessionStorage({
     key: "logged",
     defaultValue: false,
   });
-
+  const navigate = useNavigate();
+  useEffect(() => {
+    if(logged){
+      navigate("/home");
+    }else{
+      navigate("/login");
+    }
+  }, [logged]);
   const login = async (): Promise<LoginProps> => {
     try {
       const requestOptions = {
@@ -31,16 +48,53 @@ function Login() {
       throw error;
     }
   };
-
-  //Mise en place du modal permettant d'enregistrer un nouveau compte
   const [opened, { open, close }] = useDisclosure(false);
-
+  
+  
+  
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Authentication" centered size="md">
-        {/* Modal content */}
+      <Modal
+        opened={opened}
+        onClose={close}
+        title="Inscription à la taverne"
+        centered
+        size="md"
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <TextInput
+          label="Pseudo d'aventurier (Un qui en jette!)"
+          style={{marginBottom:"3%"}}
+          placeholder="Zangdar"
+          radius="xl"
+        ></TextInput>
+        <PasswordInput
+          placeholder="Mot de passe"
+          label="Mot de passe"
+          radius="xl"
+          style={{marginBottom:"3%"}}
+          withAsterisk
+        />
+        <PasswordInput
+          placeholder="Confirmation du mot de passe"
+          label="Confirmation du mot de passe"
+          radius="xl"
+          withAsterisk
+        />
+        <Button
+          variant="gradient"
+          gradient={{ from: "orange", to: "red" }}
+          style={{ marginBottom: "1%", marginTop: "5%",left:"40%" }}
+          onClick={close}
+        >
+          S'inscrire
+        </Button>
       </Modal>
-
       <Center
         style={{
           height: "86vh",
@@ -60,33 +114,54 @@ function Login() {
             flexDirection: "column",
             width: "25%",
             height: "53%",
-          }}>
+          }}
+        >
           <TextInput
             style={{ padding: "3%" }}
             label="Username"
             placeholder="Enter your username"
+            radius="xl"
           />
-          <TextInput
-            style={{ padding: "3%",marginBottom:"2%" }}
+
+          <PasswordInput
+            style={{ padding: "3%", marginBottom: "2%" }}
+            placeholder="Password"
             label="Password"
-            placeholder="Enter your password"
+            radius="xl"
           />
           <Button
             variant="gradient"
             gradient={{ from: "orange", to: "red" }}
-            style={{ marginBottom: "6%"}}>
+            style={{ marginBottom: "6%" }}
+            onClick={() => {
+              if (true){
+                setLogged(true);
+                navigate("/home");
+              } 
+              else{
+                alert("wrong password");
+                navigate("/login");
+              } ;
+            }}
+          >
             Login
           </Button>
-           <Group position="center" style={{
-            paddingTop:"1%",
-            display: "flex",
-            flexDirection: "column",
-          }}>
-           <Text>Pas encore enregistré ?</Text>
-           <Button
-           variant="gradient"
-           gradient={{ from: "orange", to: "red" }}
-           style={{ marginBottom: "1%" }}>S'inscrire
+          <Group
+            position="center"
+            style={{
+              paddingTop: "1%",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <Text>Pas encore enregistré ?</Text>
+            <Button
+              variant="gradient"
+              gradient={{ from: "orange", to: "red" }}
+              style={{ marginBottom: "1%" }}
+              onClick={open}
+            >
+              S'inscrire
             </Button>
           </Group>
         </Card>
