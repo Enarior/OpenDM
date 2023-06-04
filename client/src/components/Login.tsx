@@ -1,6 +1,8 @@
 import React from "react";
 import { useSessionStorage } from "@mantine/hooks";
+import { Center,Button,TextInput,Card } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
+import '../App.css';
 interface LoginProps {
   logged: boolean;
 }
@@ -27,34 +29,16 @@ function Login() {
     }
   };
 
+
   return (
-    <div className="login-page">
-      <div className="form">
-        <form className="login-form">
-          <input type="text" placeholder="username" />
-          <input type="password" placeholder="password" />
-          <button
-            onClick={() => {
-              login().then((r) => {
-                if (r.logged){
-                  setLogged(true);
-                  navigate("/home");
-                } 
-                else{
-                  alert("wrong password");
-                  navigate("/login");
-                } 
-              });
-            }}
-          >
-            login
-          </button>
-          <p className="message">
-            Not registered? <a href="#">Create an account</a>
-          </p>
-        </form>
-      </div>
-    </div>
+    <Center style={{height:"90vh"}}>
+      <Card shadow="sm" padding="lg" radius="md" withBorder style={{display:"flex",flexDirection:"column",backgroundColor:"#f42b03",backgroundImage:"linear-gradient(316deg, #f42b03 0%, #ffbe0b 74%);"}}>
+        <TextInput label="Username" placeholder="Enter your username" />
+        <TextInput label="Password" placeholder="Enter your password" />
+        <Button variant="gradient" gradient={{ from: 'orange', to: 'red' }}>Login</Button>
+      </Card>
+
+    </Center>
   );
 }
 
