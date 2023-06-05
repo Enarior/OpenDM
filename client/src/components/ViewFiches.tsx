@@ -21,6 +21,9 @@ function ViewFiches(createFiche: any) {
     return <Text>MEC TA REUSSI</Text>;
   } else {
     return <Text>MEC TA REUSSIazeaze</Text>;
+
+
+    // PV, emplacement de sort, Classe(autocomplete), race(autocomplete), niveau, inventaire(TransferList), couleur de background de fiche avec colorpicker
   }
 }
 

@@ -37,35 +37,24 @@ function Home() {
       </>
     );
   }
-  if (!clicked) {
-    return (
-      <div
-        className="wrapper"
-        style={{
-          width: "100%",
-          height: "102%",
-          backgroundImage:
-            "url(" + require("../ressources/images/taverne.png") + ")",
-        }}
-      >
+  return (
+    //retirer la div
+    <div
+      className="wrapper"
+      style={{
+        width: "100%",
+        height: "102%",
+        backgroundImage:
+          "url(" + require("../ressources/images/taverne.png") + ")",
+      }}
+    >
+      {!clicked ? (
         <HomeWelcome setClicked={setClicked} setCreateFiche={setCreateFiche} />
-      </div>
-    );
-  } else {
-    return (
-      <div
-        className="wrapper"
-        style={{
-          width: "100%",
-          height: "102%",
-          backgroundImage:
-            "url(" + require("../ressources/images/taverne.png") + ")",
-        }}
-      >
+      ) : (
         <ViewFiches createFiche={createFiche} />
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 }
 
 export default Home;

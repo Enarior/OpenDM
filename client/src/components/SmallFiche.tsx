@@ -16,7 +16,7 @@ import { SquarePlus, LayoutNavbarExpand } from "tabler-icons-react";
 import { useNavigate } from "react-router-dom";
 import { Global } from '@mantine/core';
 import "../App.css";
-function HomeWelcome({setClicked,setCreateFiche} : {setClicked:any,setCreateFiche:any}) {
+function HomeWelcome(setters: any) {
   return (
     <div className="foreground">
       <Center style={{padding: "8%" }}>
@@ -39,7 +39,7 @@ function HomeWelcome({setClicked,setCreateFiche} : {setClicked:any,setCreateFich
             <SquarePlus size={40} strokeWidth={2.5} color={"#4d4a19"} />
           }
           style={{fontFamily:"font_medieval",fontSize:"1.5rem"}}
-          onClick={() =>{setClicked(true);setCreateFiche(false)} }
+          onClick={() =>{setters.setClicked(true);setters.setCreateFiche(false)} }
         >
           Voir mes fiches
         </Button>
@@ -53,7 +53,7 @@ function HomeWelcome({setClicked,setCreateFiche} : {setClicked:any,setCreateFich
             <LayoutNavbarExpand size={40} strokeWidth={2.5} color={"#4d4a19"} />
           }
           style={{fontFamily:"font_medieval",fontSize:"1.5rem"}}
-          onClick={() =>{setClicked(true);setCreateFiche(true)} }
+          onClick={() =>{setters.setClicked(true);setters.setCreateFiche(true)} }
         >
           Créer une fiche
         </Button>
