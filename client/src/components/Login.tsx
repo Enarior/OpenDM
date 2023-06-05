@@ -17,11 +17,15 @@ interface LoginProps {
   logged: boolean;
 }
 function Login() {
-  
+  //HOOKS
   const [logged, setLogged] = useSessionStorage({
     key: "logged",
     defaultValue: false,
   });
+  //HOOKS LOGIN
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
   useEffect(() => {
     if(logged){
@@ -35,7 +39,7 @@ function Login() {
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title: "React POST Request Example" }),
+        body: JSON.stringify({ TestUsername: username, TestPassword: password }),
       };
       const response = await fetch(
         "http://localhost:9000/api/login",
@@ -121,6 +125,8 @@ function Login() {
             label="Username"
             placeholder="Enter your username"
             radius="xl"
+            value={username}
+            onChange={(event) => setUsername(event.currentTarget.value)}
           />
 
           <PasswordInput
@@ -128,12 +134,15 @@ function Login() {
             placeholder="Password"
             label="Password"
             radius="xl"
+            value={password}
+            onChange={(event) => setPassword(event.currentTarget.value)}
           />
           <Button
             variant="gradient"
             gradient={{ from: "orange", to: "red" }}
             style={{ marginBottom: "6%" }}
             onClick={() => {
+              const data = login();
               if (true){
                 setLogged(true);
                 navigate("/home");
