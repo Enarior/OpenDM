@@ -8,6 +8,7 @@ const cors = require("cors");
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 
 app.post("/", function (req, res) {
@@ -22,22 +23,17 @@ app.post('/api/register', function (req, res) {
 });
 
 
-app.post('/api/login', function (req, res) {
+app.post('/api/login', async function (req, res) {
 
-  console.log(req);
-
+  console.log(req.body);
   
-  queries.getUser(req.body.username, req.body.password, function (result) {
-    if (result) {
-      console.log(result);
-      res.json({ logged : true });
-    } else {
-      res.json({ logged : false });
-    }
-  });
-
-  //res.json({ logged : true });
-  //queries.addUser("salut", "salut");
+  const data = await queries.getUser(req.body.TestUsername, req.body.TestPassword);
+  if (data) {
+    console.log("utilisateur trouvé", data.username, data.password);
+    res.json({ logged : true });
+  } else {
+    res.json({ logged : false });
+  };
 
 });
 app.get("/api/home", function (req, res) {

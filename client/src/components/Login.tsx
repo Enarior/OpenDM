@@ -42,12 +42,11 @@ function Login() {
         body: JSON.stringify({ TestUsername: username, TestPassword: password }),
       };
       console.log(requestOptions);
-      
-      const response = await fetch("htpp://localhost:9000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ TestUsername: username, TestPassword: password }),
-      });
+
+      const response = await fetch(
+        "http://localhost:9000/api/login",
+        requestOptions
+      );
 
       const data = response.json();
       return data;
@@ -146,15 +145,16 @@ function Login() {
             gradient={{ from: "orange", to: "red" }}
             style={{ marginBottom: "6%" }}
             onClick={() => {
-              const data = login();
-              if (true){
-                setLogged(true);
-                navigate("/home");
-              } 
-              else{
-                alert("wrong password");
-                navigate("/login");
-              } ;
+
+              login().then(async (res) => {
+                if (res.logged) {
+                  setLogged(res.logged);
+                  navigate("/home");
+                } else{
+                  alert("wrong password");
+                  navigate("/login");
+                } ;
+              });
             }}
           >
             Login

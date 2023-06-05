@@ -21,25 +21,26 @@ function mongooseStatus() {
 
 module.exports = {
 
-	addUser: async function (name, pass, callback) {
+	addUser: async function (name, pass) {
 		var user = new User({ username: name, password: pass });
 		console.log("Adding user : " + user.username + " " + user.password);
 
 		await user.save();
 	},
 
-	addSheet: async function (name, hp, mana, callback) {
+	addSheet: async function (name, hp, mana) {
 		var sheet = new Sheet({ name: name, hp: hp, mana: mana });
 		console.log("Adding sheet : " + sheet.name + " " + sheet.hp + " " + sheet.mana);
 		
 		await sheet.save();
 	},
 
-	getUser: async function (username, password, callback) {
+	getUser: async function (username, password) {
 		const user = await User.findOne({ username: username, password: password });
 
 		if(user){
-			res.json(user);
+			console.log("Found user : " + user.username + " " + user.password);
+			return user;
 		}
 	},
 
