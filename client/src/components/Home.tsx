@@ -28,7 +28,7 @@ function Home() {
           rédigé vers la page de connexion
         </Text>
         <NavLink
-          label="With icon"
+          label="Etre rédirigé vers la page de connexion"
           icon={<IconAlertTriangle size="1rem" stroke={1.5} />}
           onClick={() => {
             navigate("/login");
