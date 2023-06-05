@@ -142,7 +142,7 @@ function Login() {
             gradient={{ from: "orange", to: "red" }}
             style={{ marginBottom: "6%" }}
             onClick={() => {
-              const data = login();
+              //const data = login();
               if (true){
                 setLogged(true);
                 navigate("/home");

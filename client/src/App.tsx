@@ -35,7 +35,11 @@ function App() {
     defaultValue: false,
   });
   ////////////////////////////////***ROUTING */
-  
+
+  function deconnexion(){
+    setLogged(false);
+    return <Navigate to="/login" />;
+  }
  
   return (
     //MantineProvider permet de mettre en place le dark mode, on entoure tout le reste de l'application avec
@@ -51,10 +55,16 @@ function App() {
           "url(" + require("./ressources/images/taverne.png") + ")",}}
         header={
           <Header height={60} p="xs" style={{display:"flex",flexDirection:"row",alignItems:"center"}}>
-            <Title order={1} style={{paddingRight:"88%"}} 
+            <Title order={1} style={{paddingRight:"81%"}} 
           variant="gradient"
           gradient={{ from: "orange", to: "red" }}
           >OpenDM</Title>
+            <Button
+              variant="gradient"
+              gradient={{ from: "orange", to: "red" }}
+              style={{ marginRight: "1%" }}
+              onClick={() => deconnexion()}
+            >Déconnexion</Button>
             <ActionIcon
               variant="outline"
               color={dark ? "yellow" : "blue"}
