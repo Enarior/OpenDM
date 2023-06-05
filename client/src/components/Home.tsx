@@ -43,9 +43,7 @@ function Home() {
       className="wrapper"
       style={{
         width: "100%",
-        height: "102%",
-        backgroundImage:
-          "url(" + require("../ressources/images/taverne.png") + ")",
+        height: "101%",
       }}
     >
       {!clicked ? (
