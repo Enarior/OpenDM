@@ -1,11 +1,14 @@
-var db = require('./db.js');
-console.log(db);
-const User = db.UserModel;
-const Sheet = db.SheetModel;
+const userSchema = require('./user.js');
+const sheetSchema = require('./sheet.js');
 
-//const { db, User, Sheet } = require('./db.js');
+const mongoose = require("mongoose");
+const PORT = 27017;
+const DB_NAME = "kmn";
+var connection = mongoose.createConnection(`mongodb://localhost:${PORT}/${DB_NAME}`);
 
-//const SHA2 = require("sha2");
+const User = connection.model('User', userSchema);
+const Sheet = connection.model('Sheet', sheetSchema);
+
 
 module.exports = {
 
@@ -21,12 +24,18 @@ module.exports = {
 		console.log("Adding sheet : " + sheet.name + " " + sheet.hp + " " + sheet.mana);
 		
 		await sheet.save();
-
-		db.query("INSERT INTO documentuser(documentpath, documentname, iduser) VALUES(?, ?, (SELECT iduser FROM users WHERE login = ?))", [path, name, login], function (err, results) {
-			if (err) throw err;
-			callback(true);
-		});
 	},
+
+	getUser: async function (name, callback) {
+		const user = await User.findOne({ username: name });
+
+		if(user){
+			res.json(user);
+		}
+	},
+
+
+	//---------------------------------------------
 
 	addDemande: function (login, texte, callback) {
 		db.query('SELECT iduser from demande WHERE iduser = (SELECT iduser FROM users WHERE login = ?) and done = TRUE', login, function (err, results) {

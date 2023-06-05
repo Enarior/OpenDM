@@ -2,13 +2,13 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
+var queries = require('./model/queries.js');
 const cors = require("cors");
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-var queries = require('../model/queries.js');
 
 app.post("/", function (req, res) {
   console.log("Hello World!");
@@ -18,7 +18,6 @@ app.post('/api/register', function (req, res) {
 
   res.json({ logged : true });
   queries.addUser("salut", "salut");
-
 });
 
 

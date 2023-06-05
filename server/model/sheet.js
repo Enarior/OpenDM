@@ -6,6 +6,6 @@ const sheetSchema = new mongoose.Schema({
 	mana: Number
 });
 
-const sheetModel = mongoose.model('Sheet', sheetSchema);
+//const sheetModel = mongoose.model('Sheet', sheetSchema);
 
-module.exports = sheetModel;
+module.exports = sheetSchema;
