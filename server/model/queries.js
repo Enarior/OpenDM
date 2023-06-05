@@ -9,6 +9,15 @@ var connection = mongoose.createConnection(`mongodb://localhost:${PORT}/${DB_NAM
 const User = connection.model('User', userSchema);
 const Sheet = connection.model('Sheet', sheetSchema);
 
+//Debug mongoose
+function mongooseStatus() {
+	switch (mongoose.connection.readyState) {
+		case 0: console.log("Mongo : disconnected"); break;
+		case 1: console.log("Mongo : connected"); break;
+		case 2: console.log("Mongo : connecting"); break;
+		case 3: console.log("Mongo : disconnecting"); break;
+	}
+}
 
 module.exports = {
 
@@ -26,8 +35,8 @@ module.exports = {
 		await sheet.save();
 	},
 
-	getUser: async function (name, callback) {
-		const user = await User.findOne({ username: name });
+	getUser: async function (username, password, callback) {
+		const user = await User.findOne({ username: username, password: password });
 
 		if(user){
 			res.json(user);

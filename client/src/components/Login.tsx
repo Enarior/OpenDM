@@ -41,10 +41,14 @@ function Login() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ TestUsername: username, TestPassword: password }),
       };
-      const response = await fetch(
-        "http://localhost:9000/api/login",
-        requestOptions
-      );
+      console.log(requestOptions);
+      
+      const response = await fetch("htpp://localhost:9000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ TestUsername: username, TestPassword: password }),
+      });
+
       const data = response.json();
       return data;
     } catch (error) {
@@ -142,7 +146,7 @@ function Login() {
             gradient={{ from: "orange", to: "red" }}
             style={{ marginBottom: "6%" }}
             onClick={() => {
-              //const data = login();
+              const data = login();
               if (true){
                 setLogged(true);
                 navigate("/home");

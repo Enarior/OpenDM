@@ -17,26 +17,26 @@ app.post("/", function (req, res) {
 app.post('/api/register', function (req, res) {
 
   res.json({ logged : true });
+  console.log("REGISTER");
   queries.addUser("salut", "salut");
 });
 
 
 app.post('/api/login', function (req, res) {
-  //QUERIES DB POUR TESTER LE REQ.BODY.USERNAME ET REQ.BODY.PASSWORD sont OK dans la DB
 
-  //Ensuite si cest ok on renvoie un res.json({logged : true})
+  console.log(req);
 
-  //Sinon on renvoie un res.json({logged : false})
-
-  queries.getUser(req.body.password, req.body.email, function (result) {
+  
+  queries.getUser(req.body.username, req.body.password, function (result) {
     if (result) {
+      console.log(result);
       res.json({ logged : true });
     } else {
       res.json({ logged : false });
     }
   });
 
-  res.json({ logged : true });
+  //res.json({ logged : true });
   //queries.addUser("salut", "salut");
 
 });
