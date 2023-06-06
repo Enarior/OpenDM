@@ -76,7 +76,7 @@ app.get('/api/sheets', async function (req, res) {
 app.get('/api/sheets/count', async function (req, res) {
   console.log(req.body);
 
-  const data = await queries.getSheets(req.body.username);
+  const data = await queries.countSheets(req.body.username);
   if (data) {
     res.json({count : data});
   } else {

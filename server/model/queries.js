@@ -30,9 +30,9 @@ module.exports = {
 		await user.save();
 	},
 
-	addSheet: async function (name, hp, mana) {
-		var sheet = new Sheet({ name: name, hp: hp, mana: mana });
-		console.log("Adding sheet : " + sheet.name + " " + sheet.hp + " " + sheet.mana);
+	addSheet: async function (name, hp, mana, username) {
+		var sheet = new Sheet({ name: name, hp: hp, mana: mana , user : username});
+		console.log("Adding sheet : " + sheet.name + " " + sheet.hp + " " + sheet.mana + " for user : " + sheet.user);
 		
 		await sheet.save();
 	},
