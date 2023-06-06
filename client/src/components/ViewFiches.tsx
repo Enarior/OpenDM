@@ -38,23 +38,23 @@ function ViewFiches(createFiche: any) {
   //Construction de l'autocomplete des classes
   const charactersList = [
     {
-      image: "https://img.icons8.com/clouds/256/000000/futurama-bender.png",
+      image: require("../ressources/images/classes/barbare.jpg"),
       label: "Barbare",
     },
     {
-      image: "https://img.icons8.com/clouds/256/000000/futurama-mom.png",
+      image:  require("../ressources/images/classes/barde.jpeg"),
       label: "Barde",
     },
     {
-      image: "https://img.icons8.com/clouds/256/000000/futurama-bender.png",
+      image: require("../ressources/images/classes/clerc.jpeg"),
       label: "Druide",
     },
     {
-      image: "https://img.icons8.com/clouds/256/000000/futurama-mom.png",
+      image: require("../ressources/images/classes/druide.jpeg"),
       label: "Guerrier",
     },
     {
-      image: "https://img.icons8.com/clouds/256/000000/futurama-bender.png",
+      image: require("../ressources/images/classes/ensorceleur.jpeg"),
       label: "Magicien",
     },
     {
