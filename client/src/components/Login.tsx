@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useSessionStorage, useDisclosure } from "@mantine/hooks";
 import {
   Center,
@@ -26,14 +26,21 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  //Hooks Register
+  const [pseudo, setPseudo] = useState("");
+  const [password1, setPassword1] = useState("");
+  const [password2, setPassword2] = useState("");
+
   const navigate = useNavigate();
   useEffect(() => {
-    if(logged){
+    if (logged) {
       navigate("/home");
-    }else{
+    } else {
       navigate("/login");
     }
   }, [logged]);
+
+  //LOGIN
   const login = async (): Promise<LoginProps> => {
     try {
       const requestOptions = {
@@ -55,10 +62,29 @@ function Login() {
       throw error;
     }
   };
+  //REGISTER
+  const SendRegister = async (): Promise<LoginProps> => {
+    try {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pseudo: pseudo, password: password1 }),
+      };
+      console.log(requestOptions);
+      const response = await fetch(
+        "http://localhost:9000/api/register",
+        requestOptions
+      );
+
+      const data = response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
   const [opened, { open, close }] = useDisclosure(false);
-  
-  
-  
   return (
     <>
       <Modal
@@ -76,7 +102,7 @@ function Login() {
       >
         <TextInput
           label="Pseudo d'aventurier (Un qui en jette!)"
-          style={{marginBottom:"3%"}}
+          style={{ marginBottom: "3%" }}
           placeholder="Zangdar"
           radius="xl"
         ></TextInput>
@@ -84,7 +110,7 @@ function Login() {
           placeholder="Mot de passe"
           label="Mot de passe"
           radius="xl"
-          style={{marginBottom:"3%"}}
+          style={{ marginBottom: "3%" }}
           withAsterisk
         />
         <PasswordInput
@@ -96,8 +122,22 @@ function Login() {
         <Button
           variant="gradient"
           gradient={{ from: "orange", to: "red" }}
-          style={{ marginBottom: "1%", marginTop: "5%",left:"40%" }}
-          onClick={close}
+          style={{ marginBottom: "1%", marginTop: "5%", left: "40%" }}
+          onClick={() => {
+            if (password1 === password2) {
+              SendRegister().then(async (res) => {
+                if (res.logged) {
+                  setLogged(res.logged);
+                  navigate("/home");
+                } else {
+                  alert("wrong password");
+                  navigate("/login");
+                }
+              });
+            } else {
+              alert("passwords are not the same");
+            }
+          }}
         >
           S'inscrire
         </Button>
@@ -145,15 +185,14 @@ function Login() {
             gradient={{ from: "orange", to: "red" }}
             style={{ marginBottom: "6%" }}
             onClick={() => {
-
               login().then(async (res) => {
                 if (res.logged) {
                   setLogged(res.logged);
                   navigate("/home");
-                } else{
+                } else {
                   alert("wrong password");
                   navigate("/login");
-                } ;
+                }
               });
             }}
           >
