@@ -40,8 +40,8 @@ module.exports = {
 	//
 	// GET
 	//
-	getUser: async function (username, password) {
-		const user = await User.findOne({ username: username, password: password });
+	getUser: async function (username) {
+		const user = await User.findOne({ username: username });
 
 		if(user){
 			console.log("Found user : " + user.username + " " + user.password);
@@ -55,6 +55,12 @@ module.exports = {
 			console.log("Found sheet : " + user);
 			return sheet;
 		}
+	},
+
+	getSheets: async function (){
+		const sheets = Sheet.find({});
+		
+		res.send(sheets);  
 	},
 
 	//
