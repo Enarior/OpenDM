@@ -65,11 +65,22 @@ app.get('/api/user', async function (req, res) {
 app.get('/api/sheets', async function (req, res) {
   console.log(req.body);
 
-  const data = await queries.getSheets(req.body.username, req.body.password);
+  const data = await queries.getSheets(req.body.username);
   if (data) {
     res.json(data);
   } else {
     console.log("Erreur lors de la récupération des sheets");
+  };
+});
+
+app.get('/api/sheets/count', async function (req, res) {
+  console.log(req.body);
+
+  const data = await queries.getSheets(req.body.username);
+  if (data) {
+    res.json({count : data});
+  } else {
+    console.log("Erreur lors du décompte des sheets");
   };
 });
 

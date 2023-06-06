@@ -57,10 +57,16 @@ module.exports = {
 		}
 	},
 
-	getSheets: async function (){
-		const sheets = Sheet.find({});
+	getSheets: async function (username){
+		const sheets = Sheet.find({user : username});
 		
 		res.send(sheets);  
+	},
+	
+	countSheets: async function (username){
+		const count = Sheet.count({user : username});
+
+		res.send(count);
 	},
 
 	//
