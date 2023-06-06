@@ -31,6 +31,9 @@ function Login() {
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
 
+  console.log(password1);
+  console.log(password2);
+
   const navigate = useNavigate();
   useEffect(() => {
     if (logged) {
@@ -105,6 +108,7 @@ function Login() {
           style={{ marginBottom: "3%" }}
           placeholder="Zangdar"
           radius="xl"
+          onChange={(event) => setPseudo(event.currentTarget.value)}
         ></TextInput>
         <PasswordInput
           placeholder="Mot de passe"
@@ -112,12 +116,14 @@ function Login() {
           radius="xl"
           style={{ marginBottom: "3%" }}
           withAsterisk
+          onChange={(event) => setPassword1(event.currentTarget.value)}
         />
         <PasswordInput
           placeholder="Confirmation du mot de passe"
           label="Confirmation du mot de passe"
           radius="xl"
           withAsterisk
+          onChange={(event) => setPassword2(event.currentTarget.value)}
         />
         <Button
           variant="gradient"
@@ -125,6 +131,7 @@ function Login() {
           style={{ marginBottom: "1%", marginTop: "5%", left: "40%" }}
           onClick={() => {
             if (password1 === password2) {
+              console.log("passwords are the same");
               SendRegister().then(async (res) => {
                 if (res.logged) {
                   setLogged(res.logged);
