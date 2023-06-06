@@ -39,7 +39,7 @@ function Login() {
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ TestUsername: username, TestPassword: password }),
+        body: JSON.stringify({ username: username, password: password }),
       };
       console.log(requestOptions);
 

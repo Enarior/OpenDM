@@ -27,7 +27,7 @@ app.post('/api/login', async function (req, res) {
 
   console.log(req.body);
   
-  const data = await queries.getUser(req.body.TestUsername, req.body.TestPassword);
+  const data = await queries.getUser(req.body.username, req.body.password);
   if (data) {
     console.log("utilisateur trouvé", data.username, data.password);
     res.json({ logged : true });
