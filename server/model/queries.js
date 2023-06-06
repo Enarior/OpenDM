@@ -30,9 +30,9 @@ module.exports = {
 		await user.save();
 	},
 
-	addSheet: async function (name, hp, mana) {
-		var sheet = new Sheet({ name: name, hp: hp, mana: mana });
-		console.log("Adding sheet : " + sheet.name + " " + sheet.hp + " " + sheet.mana);
+	addSheet: async function (name, hp, mana, username) {
+		var sheet = new Sheet({ name: name, hp: hp, mana: mana , user : username});
+		console.log("Adding sheet : " + sheet.name + " " + sheet.hp + " " + sheet.mana + " for user : " + sheet.user);
 		
 		await sheet.save();
 	},
@@ -40,8 +40,8 @@ module.exports = {
 	//
 	// GET
 	//
-	getUser: async function (username, password) {
-		const user = await User.findOne({ username: username, password: password });
+	getUser: async function (username) {
+		const user = await User.findOne({ username: username });
 
 		if(user){
 			console.log("Found user : " + user.username + " " + user.password);
@@ -55,6 +55,18 @@ module.exports = {
 			console.log("Found sheet : " + user);
 			return sheet;
 		}
+	},
+
+	getSheets: async function (username){
+		const sheets = Sheet.find({user : username});
+		
+		res.send(sheets);  
+	},
+	
+	countSheets: async function (username){
+		const count = Sheet.count({user : username});
+
+		res.send(count);
 	},
 
 	//

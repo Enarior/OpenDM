@@ -10,75 +10,80 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
+//
+//ADD
+//
 app.post("/", function (req, res) {
   console.log("Hello World!");
 });
 
-app.post('/api/register', function (req, res) {
+app.post('/api/register', async function (req, res) {
 
-  res.json({ logged : true });
+  console.log(req.body);
+
+  await queries.addUser(req.body.pseudo, req.body.password);
+  res.send({ logged : true });
+});
+
+app.post('/api/sheets/add', function (req, res) {
+
+  res.json({ logged: true });
   console.log("REGISTER");
-  queries.addUser("salut", "salut");
+  queries.addSheet("salut", 10, 10);
 });
 
 
+//
+//GET
+//
 app.post('/api/login', async function (req, res) {
 
   console.log(req.body);
-  
+
   const data = await queries.getUser(req.body.username, req.body.password);
   if (data) {
     console.log("utilisateur trouvé", data.username, data.password);
-    res.json({ logged : true });
+    res.json({ logged: true });
   } else {
-    res.json({ logged : false });
+    res.json({ logged: false });
   };
-
-});
-app.get("/api/home", function (req, res) {
-  res.send("homeUser");
 });
 
+app.get('/api/user', async function (req, res) {
 
-/*
-app.post("/create", (req, res) => {
-  const newPost = new Post({
-    title: req.body.title,
-    description: req.body.description,
-  });
- 
-  newPost
-    .save()
-    .then((doc) => console.log(doc))
-    .catch((err) => console.log(err));
+  console.log(req.body);
+
+  const data = await queries.getUser(req.body.username);
+  if (data) {
+    console.log("utilisateur trouvé", data.username, data.password);
+    res.json(data);
+  } else {
+    res.json(data);
+  };
 });
- 
-app.get("/posts", (req, res) => {
-  Post.find()
-    .then((items) => res.json(items))
-    .catch((err) => console.log(err));
+
+app.get('/api/sheets', async function (req, res) {
+  console.log(req.body);
+
+  const data = await queries.getSheets(req.body.username);
+  if (data) {
+    res.json(data);
+  } else {
+    console.log("Erreur lors de la récupération des sheets");
+  };
 });
- 
-app.delete("/delete/:id", (req, res) => {
-  console.log(req.params);
-  Post.findByIdAndDelete({ _id: req.params.id })
-    .then((doc) => console.log(doc))
-    .catch((err) => console.log(err));
+
+app.get('/api/sheets/count', async function (req, res) {
+  console.log(req.body);
+
+  const data = await queries.countSheets(req.body.username);
+  if (data) {
+    res.json({count : data});
+  } else {
+    console.log("Erreur lors du décompte des sheets");
+  };
 });
- 
-app.put("/update/:id", (req, res) => {
-  Post.findByIdAndUpdate(
-    { _id: req.params.id },
-    {
-      title: req.body.title,
-      description: req.body.description,
-    }
-  )
-    .then((doc) => console.log(doc))
-    .catch((err) => console.log(err));
-});
-*/
+
 app.listen(3001, function () {
   console.log("Express server is running");
 });
