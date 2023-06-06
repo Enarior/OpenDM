@@ -18,7 +18,8 @@ import { Global } from '@mantine/core';
 import "../App.css";
 function HomeWelcome({setClicked,setCreateFiche} : {setClicked:any,setCreateFiche:any}) {
   return (
-    <div className="foreground">
+    <div className="foreground" style={{backgroundImage:
+      "url(" + require("../ressources/images/taverne.png") + ")",}}>
       <Center style={{padding: "8%" }}>
         <h1  style={{fontSize:"15vh",color:"white",fontFamily:"title_medieval"}}>Bienvenue à la taverne !</h1>
       </Center>

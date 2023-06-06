@@ -10,56 +10,75 @@ import {
   Group,
   Text,
   PasswordInput,
-    Flex,
+  Flex,
+  SimpleGrid,
+  Image,
+  Badge,
+  Title,
+  Breadcrumbs,
 } from "@mantine/core";
-import { SquarePlus, LayoutNavbarExpand } from "tabler-icons-react";
+import { SquarePlus, LayoutNavbarExpand, Anchor } from "tabler-icons-react";
 import { useNavigate } from "react-router-dom";
-import { Global } from '@mantine/core';
+import { Global } from "@mantine/core";
 import "../App.css";
-function HomeWelcome(setters: any) {
-  return (
-    <div className="foreground">
-      <Center style={{padding: "8%" }}>
-        <h1  style={{fontSize:"15vh",color:"white",fontFamily:"title_medieval"}}>Bienvenue à la taverne !</h1>
-      </Center>
-      <Flex
-        mih={50}
-        gap="xl"
-        justify="space-around"
-        align="center"
-        direction="row"
-        wrap="wrap"
-      >
-        <Button
-          variant="white"
-          color="yellow"
-          radius="md"
-          size="xl"
-          leftIcon={
-            <SquarePlus size={40} strokeWidth={2.5} color={"#4d4a19"} />
-          }
-          style={{fontFamily:"font_medieval",fontSize:"1.5rem"}}
-          onClick={() =>{setters.setClicked(true);setters.setCreateFiche(false)} }
-        >
-          Voir mes fiches
-        </Button>
 
-        <Button
-          variant="white"
-          color="yellow"
-          radius="md"
-          size="xl"
-          leftIcon={
-            <LayoutNavbarExpand size={40} strokeWidth={2.5} color={"#4d4a19"} />
-          }
-          style={{fontFamily:"font_medieval",fontSize:"1.5rem"}}
-          onClick={() =>{setters.setClicked(true);setters.setCreateFiche(true)} }
+
+function SmallFiche({open}:{open:any}) {
+  const items = [{ Level: "1" }, { Race: "gnome" }, { Classe: "mage" }].map(
+    (item, index) => (
+      <Text>
+        {Object.keys(item)[0]} : {Object.values(item)[0]}
+      </Text>
+    )
+  );
+  return (
+    <Card shadow="sm" padding="lg" radius="md" withBorder style={{}} variant="gradien">
+      <Card.Section>
+        <Title
+          order={1}
+          style={{
+            textAlign: "left",
+            fontFamily: "font_medieval",
+            fontSize: "4vh",
+            paddingLeft: "2%",
+          }}
         >
-          Créer une fiche
-        </Button>
-      </Flex>
-    </div>
+          Pseudo
+        </Title>
+        <Flex
+          mih={50}
+          bg="rgba(0, 0, 0, .3)"
+          gap="xl"
+          justify="flex-start"
+          align="center"
+          direction="row"
+          wrap="wrap"
+          style={{width:"auto",paddingLeft:"2%",paddingRight:"2%"}}
+        >
+          <Breadcrumbs separator="|">{items}</Breadcrumbs>
+        </Flex>
+      </Card.Section>
+      <Card.Section style={{ paddingLeft: "1%",paddingTop:"1%",paddingBottom:"1%" }}>
+        <Flex
+          gap="xl"
+          justify="flex-end"
+          align="flex-start"
+          direction="row"
+          wrap="wrap"
+        >
+          <Button
+          variant="gradient"
+          gradient={{ from: "orange", to: "red" }}
+          onClick={() => open()}
+          >Edit</Button>
+          <Button
+          variant="gradient"
+          gradient={{ from: "#ff0000", to: "red" }}
+          >Delete</Button>
+        </Flex>
+      </Card.Section>
+    </Card>
   );
 }
 
-export default HomeWelcome;
+export default SmallFiche;

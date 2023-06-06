@@ -51,8 +51,7 @@ function App() {
      {/*AppShell permet de mettre en place le header et le footer, on entoure le reste de l'application avec*/} 
       <AppShell
         padding="md"
-        style={{backgroundImage:
-          "url(" + require("./ressources/images/taverne.png") + ")",}}
+        
         header={
           <Header height={60} p="xs" style={{display:"flex",flexDirection:"row",alignItems:"center"}}>
             <Title order={1} style={{paddingRight:"81%"}} 
