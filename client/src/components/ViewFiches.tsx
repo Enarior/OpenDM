@@ -23,6 +23,10 @@ import {
   Radio,
   SelectItemProps,
   MantineColor,
+  useMantineTheme,
+  NumberInput,
+  TransferList,
+  TransferListData,
 } from "@mantine/core";
 import { SquarePlus, LayoutNavbarExpand } from "tabler-icons-react";
 import { useNavigate } from "react-router-dom";
@@ -42,7 +46,7 @@ function ViewFiches(createFiche: any) {
       label: "Barbare",
     },
     {
-      image:  require("../ressources/images/classes/barde.jpeg"),
+      image: require("../ressources/images/classes/barde.jpeg"),
       label: "Barde",
     },
     {
@@ -58,23 +62,23 @@ function ViewFiches(createFiche: any) {
       label: "Magicien",
     },
     {
-      image: "https://img.icons8.com/clouds/256/000000/futurama-mom.png",
+      image: require("../ressources/images/classes/moine.jpeg"),
       label: "Moine",
     },
     {
-      image: "https://img.icons8.com/clouds/256/000000/futurama-bender.png",
+      image: require("../ressources/images/classes/paladin.jpeg"),
       label: "Paladin",
     },
     {
-      image: "https://img.icons8.com/clouds/256/000000/futurama-mom.png",
+      image: require("../ressources/images/classes/clerc.jpeg"),
       label: "Prêtre",
     },
     {
-      image: "https://img.icons8.com/clouds/256/000000/futurama-bender.png",
+      image: require("../ressources/images/classes/rodeur.jpeg"),
       label: "Rôdeur",
     },
     {
-      image: "https://img.icons8.com/clouds/256/000000/futurama-mom.png",
+      image: require("../ressources/images/classes/roublard.jpeg"),
       label: "Roublard",
     },
   ];
@@ -99,6 +103,29 @@ function ViewFiches(createFiche: any) {
     )
   );
 
+
+  //Partie Inventaire
+  const initialValues: TransferListData = [
+    [
+      { value: 'react', label: 'React' },
+      { value: 'ng', label: 'Angular' },
+      { value: 'next', label: 'Next.js' },
+      { value: 'blitz', label: 'Blitz.js' },
+      { value: 'gatsby', label: 'Gatsby.js' },
+      { value: 'vue', label: 'Vue' },
+      { value: 'jq', label: 'jQuery' },
+    ],
+    [
+      { value: 'sv', label: 'Svelte' },
+      { value: 'rw', label: 'Redwood' },
+      { value: 'np', label: 'NumPy' },
+      { value: 'dj', label: 'Django' },
+      { value: 'fl', label: 'Flask' },
+    ],
+  ];
+
+
+  const [dataInventaire, setData] = useState<TransferListData>(initialValues);
   return (
     //retirer la di
 
@@ -115,34 +142,107 @@ function ViewFiches(createFiche: any) {
               label="Nom de l'aventurier"
               style={{ width: "25vh" }}
             ></TextInput>
-            <Group
-              position="center"
-              style={{ display: "flex", flexDirection: "column" }}
-            >
-              <Text>Niveau</Text>
-              <PinInput length={1} />
-            </Group>
+            <NumberInput
+              label="Niveau"
+              min={1}
+              style={{ width: "10vh", textAlign: "center" }}
+            />
           </Flex>
-          <Flex>
+          <Flex justify={"space-between"}>
             <Autocomplete
               label="Votre classe"
               placeholder="Pick one"
               itemComponent={AutoCompleteItem}
-              data={data}
               dropdownPosition="bottom"
-              filter={(value, item) =>
-                item.value.toLowerCase().includes(value.toLowerCase().trim()) ||
-                item.description
-                  .toLowerCase()
-                  .includes(value.toLowerCase().trim())
-              }
+              limit={15}
+              data={data}
             />
             <Autocomplete
               label="Votre race"
               placeholder="Pick one"
-              data={["React", "Angular", "Svelte", "Vue"]}
+              dropdownPosition="bottom"
+              limit={15}
+              data={[
+                "Elfe",
+                "Halfelin",
+                "Humain",
+                "Nain",
+                "Demi-Elfe",
+                "Demi-Orc",
+                "Drakéide",
+                "Gnome",
+                "Tiffelin",
+              ]}
             />
           </Flex>
+          <Flex direction="row" justify="space-between" align="center">
+            <Card shadow="md" padding="md" radius="lg" withBorder style={{paddingRight:"10%"}}>
+              <SimpleGrid cols={2} spacing="xl">
+                <NumberInput
+                  label="Force"
+                  labelProps={{ color: "orange" }}
+                  min={1}
+                  max={20}
+                  style={{ width: "15vh", textAlign: "center" }}
+                />
+                <NumberInput
+                  label="Dextérité"
+                  min={1}
+                  max={20}
+                  style={{ width: "15vh", textAlign: "center" }}
+                />
+                <NumberInput
+                  label="Constitution"
+                  min={1}
+                  max={20}
+                  style={{ width: "15vh", textAlign: "center" }}
+                />
+                <NumberInput
+                  label="Intelligence"
+                  min={1}
+                  max={20}
+                  style={{ width: "15vh", textAlign: "center" }}
+                />
+                <NumberInput
+                  label="Sagesse"
+                  min={1}
+                  max={20}
+                  style={{ width: "15vh", textAlign: "center" }}
+                />
+                <NumberInput
+                  label="Charisme"
+                  min={1}
+                  max={20}
+                  style={{ width: "15vh", textAlign: "center" }}
+                />
+              </SimpleGrid>
+            </Card>
+            <Flex direction="column">
+              <NumberInput
+                label="PV"
+                min={1}
+                style={{ width: "15vh", textAlign: "center" }}
+              />
+              <NumberInput
+                label="CA"
+                min={1}
+                style={{ width: "15vh", textAlign: "center" }}
+              />
+              <NumberInput
+                label="Emplacements de sorts"
+                min={1}
+                style={{ width: "15vh", textAlign: "center" }}
+              />
+            </Flex>
+          </Flex>
+          <TransferList
+            value={dataInventaire}
+            onChange={setData}
+            searchPlaceholder="Search..."
+            nothingFound="Nothing here"
+            titles={["Frameworks", "Libraries"]}
+            breakpoint="sm"
+          />
         </SimpleGrid>
       </Modal>
       <div>

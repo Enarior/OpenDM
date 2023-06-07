@@ -54,7 +54,7 @@ function App() {
         
         header={
           <Header height={60} p="xs" style={{display:"flex",flexDirection:"row",alignItems:"center"}}>
-            <Title order={1} style={{paddingRight:"81%"}} 
+            <Title order={1} style={{paddingRight:"79%"}} 
           variant="gradient"
           gradient={{ from: "orange", to: "red" }}
           >OpenDM</Title>

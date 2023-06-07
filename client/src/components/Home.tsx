@@ -45,7 +45,7 @@ function Home() {
       className="wrapper"
       style={{
         width: "100%",
-        height: "101%",
+        height: "100%",
       }}
     >
       {!clicked ? (

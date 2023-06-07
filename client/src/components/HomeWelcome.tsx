@@ -19,7 +19,7 @@ import "../App.css";
 function HomeWelcome({setClicked,setCreateFiche} : {setClicked:any,setCreateFiche:any}) {
   return (
     <div className="foreground" style={{backgroundImage:
-      "url(" + require("../ressources/images/taverne.png") + ")",}}>
+      "url(" + require("../ressources/images/taverne.png") + ")",height:"100%",width:"100%"}}>
       <Center style={{padding: "8%" }}>
         <h1  style={{fontSize:"15vh",color:"white",fontFamily:"title_medieval"}}>Bienvenue à la taverne !</h1>
       </Center>
