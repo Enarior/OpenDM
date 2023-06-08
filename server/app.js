@@ -6,9 +6,10 @@ var queries = require('./model/queries.js');
 const cors = require("cors");
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
+
 
 //
 //ADD
@@ -66,10 +67,12 @@ app.get('/api/user', async function (req, res) {
   };
 });
 
-app.get('/api/sheets', async function (req, res) {
-  console.log(req.body);
+app.post('/api/sheets', async function (req, res) {
+
+  console.log("GET SHEETS");
 
   const data = await queries.getSheets(req.body.username);
+
   if (data) {
     res.json(data);
   } else {
@@ -78,8 +81,8 @@ app.get('/api/sheets', async function (req, res) {
 });
 
 
-app.get('/api/sheets/count', async function (req, res) {
-  console.log(req.body);
+app.post('/api/sheets/count', async function (req, res) {
+  console.log("COUNT SHEETS");
 
   const data = await queries.countSheets(req.body.username);
   if (data) {

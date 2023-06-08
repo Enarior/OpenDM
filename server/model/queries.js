@@ -73,14 +73,13 @@ module.exports = {
 
 	getSheets: async function (username){
 		const sheets = Sheet.find({user : username});
-		
-		res.send(sheets);  
+		return(sheets);
 	},
 	
 	countSheets: async function (username){
 		const count = Sheet.count({user : username});
 
-		res.send(count);
+		return(count);
 	},
 
 	//

@@ -28,7 +28,7 @@ import {
   TransferList,
   TransferListData,
 } from "@mantine/core";
-import { SquarePlus, LayoutNavbarExpand } from "tabler-icons-react";
+import { SquarePlus, LayoutNavbarExpand, User } from "tabler-icons-react";
 import { useNavigate } from "react-router-dom";
 import { Global } from "@mantine/core";
 import "../App.css";
@@ -110,10 +110,11 @@ function ViewFiches(createFiche: any) {
   //Call the API on /api/sheets to get a JSON of all the sheets of the user
   const getSheets = async () => {
     try {
+      const user = window.sessionStorage.getItem("username");
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: userLogged}),
+        body: JSON.stringify({ username: user?.substring(1, user.length - 1)}),
       };
 
       const response = await fetch(
@@ -130,10 +131,11 @@ function ViewFiches(createFiche: any) {
   };
   const getCountSheets = async () => {
     try {
+      const user = window.sessionStorage.getItem("username");
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: userLogged}),
+        body: JSON.stringify({ username: user?.substring(1, user.length - 1)}),
       };
 
       const response = await fetch(
@@ -148,8 +150,6 @@ function ViewFiches(createFiche: any) {
       throw error;
     }
   };
-
-  
 
   useEffect(() => {
     getSheets().then((data) => {
