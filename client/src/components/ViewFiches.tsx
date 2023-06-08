@@ -103,6 +103,9 @@ function ViewFiches(createFiche: any) {
     )
   );
 
+  //Call the API on /api/sheets to get a JSON of all the sheets of the user
+  
+
 
   //Partie Inventaire
   const initialValues: TransferListData = [
@@ -130,7 +133,7 @@ function ViewFiches(createFiche: any) {
     //retirer la di
 
     <SimpleGrid cols={1} spacing="xl">
-      <Modal opened={opened} onClose={close} title="Fiche de perso">
+      <Modal opened={opened} onClose={close} title="Fiche de perso" size="auto" >
         <SimpleGrid cols={1} spacing="xl">
           <Flex
             direction="row"
@@ -176,7 +179,7 @@ function ViewFiches(createFiche: any) {
             />
           </Flex>
           <Flex direction="row" justify="space-between" align="center">
-            <Card shadow="md" padding="md" radius="lg" withBorder style={{paddingRight:"10%"}}>
+            <Card shadow="md" padding="md" radius="lg" withBorder >
               <SimpleGrid cols={2} spacing="xl">
                 <NumberInput
                   label="Force"
@@ -217,7 +220,7 @@ function ViewFiches(createFiche: any) {
                 />
               </SimpleGrid>
             </Card>
-            <Flex direction="column">
+            <Flex direction="column" style={{paddingLeft:"5%"}}>
               <NumberInput
                 label="PV"
                 min={1}
@@ -235,14 +238,7 @@ function ViewFiches(createFiche: any) {
               />
             </Flex>
           </Flex>
-          <TransferList
-            value={dataInventaire}
-            onChange={setData}
-            searchPlaceholder="Search..."
-            nothingFound="Nothing here"
-            titles={["Frameworks", "Libraries"]}
-            breakpoint="sm"
-          />
+          <Button variant="gradient" gradient={{ from: "orange", to: "red" }}>Enregistrer</Button>
         </SimpleGrid>
       </Modal>
       <div>

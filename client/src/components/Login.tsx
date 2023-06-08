@@ -22,6 +22,10 @@ function Login() {
     key: "logged",
     defaultValue: false,
   });
+  const [userLogged, setUserLogged] = useSessionStorage({
+    key: "username",
+    defaultValue: "",
+  });
   //HOOKS LOGIN
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -51,7 +55,7 @@ function Login() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: username, password: password }),
       };
-      console.log(requestOptions);
+      setUserLogged(username);
 
       const response = await fetch(
         "http://localhost:9000/api/login",
