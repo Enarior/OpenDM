@@ -30,8 +30,22 @@ module.exports = {
 		await user.save();
 	},
 
-	addSheet: async function (name, hp, mana, username) {
-		var sheet = new Sheet({ name: name, hp: hp, mana: mana , user : username});
+	addSheet: async function (name, level, classe, race, hp, ca, sorts, STR, DEX, CON, INT, WIS, CHA, username) {
+		var sheet = new Sheet({
+			name : name,
+			level : level,
+			classe : classe,
+			race : race,
+			hp : hp,
+			ca : ca,
+			sorts : sorts,
+			STR : STR,
+			DEX : DEX,
+			CON : CON,
+			INT : INT,
+			WIS : WIS,
+			CHA : CHA,
+			user : username})
 		console.log("Adding sheet : " + sheet.name + " " + sheet.hp + " " + sheet.mana + " for user : " + sheet.user);
 		
 		await sheet.save();
@@ -77,10 +91,23 @@ module.exports = {
 
 		console.log("Updated user : " + res);
 	},
-	updateSheet: async function (name, newHP, newMana) {
-		await Sheet.deleteOne({ name : name }, { hp : newHP, mana : newMana });
-
-		console.log("Updated sheet : " + res);
+	updateSheet: async function (name, level, classe, race, hp, ca, sorts, STR, DEX, CON, INT, WIS, CHA, username) {
+		console.log("Adding sheet : " + sheet.name + " " + sheet.hp + " " + sheet.mana + " for user : " + sheet.user);
+		const res = await Sheet.updateOne({name : name},{
+			name : name,
+			level : level,
+			classe : classe,
+			race : race,
+			hp : hp,
+			ca : ca,
+			sorts : sorts,
+			STR : STR,
+			DEX : DEX,
+			CON : CON,
+			INT : INT,
+			WIS : WIS,
+			CHA : CHA,
+			user : username});
 	},
 
 	//

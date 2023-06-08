@@ -25,11 +25,15 @@ app.post('/api/register', async function (req, res) {
   res.send({ logged : true });
 });
 
-app.post('/api/sheets/add', function (req, res) {
+app.post('/api/sheets/add', async function (req, res) {
 
   res.json({ logged: true });
-  console.log("REGISTER");
-  queries.addSheet("salut", 10, 10);
+  console.log("ADDING SHEET");
+  // use queries.addsheet()
+  
+  await queries.addSheet(req.body.name, req.body.level, req.body.classe, req.body.race,
+                        req.body.hp, req.body.ca, req.body.sorts, req.body.STR, req.body.DEX,
+                        req.body.CON, req.body.INT, req.body.WIS, req.body.CHA, req.body.username);
 });
 
 
@@ -73,6 +77,7 @@ app.get('/api/sheets', async function (req, res) {
   };
 });
 
+
 app.get('/api/sheets/count', async function (req, res) {
   console.log(req.body);
 
@@ -82,6 +87,30 @@ app.get('/api/sheets/count', async function (req, res) {
   } else {
     console.log("Erreur lors du décompte des sheets");
   };
+});
+
+//
+//UPDATE
+//
+
+app.post('/api/sheets/update', async function (req, res) {
+
+  res.json({ logged: true });
+  console.log("UPDATE SHEET");
+  // use queries.addsheet()
+  
+  await queries.addSheet(req.body.name, req.body.level, req.body.classe, req.body.race,
+                        req.body.hp, req.body.ca, req.body.sorts, req.body.STR, req.body.DEX,
+                        req.body.CON, req.body.INT, req.body.WIS, req.body.CHA, req.body.username);
+});
+
+//
+//DELETE
+//
+
+app.get('/api/sheets/delete', async function (req, res) {
+
+  await queries.deleteSheet(req.body.name);
 });
 
 app.listen(3001, function () {
