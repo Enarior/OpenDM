@@ -43,6 +43,8 @@ function ViewFiches(createFiche: any) {
     key: "username",
     defaultValue: "",
   });
+  const [count, setCount] = useState(0);
+  const [sheets,setSheets] = useState([]);
   //Construction de l'autocomplete des classes
   const charactersList = [
     {
@@ -154,13 +156,17 @@ function ViewFiches(createFiche: any) {
   useEffect(() => {
     getSheets().then((data) => {
       console.log(data);
+      setSheets(data);
     });
+
     getCountSheets().then((data) => {
       console.log(data);
+      setCount(data.count);
     }
     )
   }, []);
-
+  
+  
 
   return (
     //retirer la di
@@ -302,16 +308,11 @@ function ViewFiches(createFiche: any) {
             Créer un nouveau personnage
           </Button>
         </div>
-        <Text style={{ fontSize: "2.5vh" }}>Nombre de fiche : {2 + 2}</Text>
+        <Text style={{ fontSize: "2.5vh" }}>Nombre de fiche : {count}</Text>
       </div>
       <div style={{}}>
         <SimpleGrid cols={3} spacing="xl">
-          <SmallFiche open={open} />
-          <SmallFiche open={open} />
-          <SmallFiche open={open} />
-          <SmallFiche open={open} />
-          <SmallFiche open={open} />
-          <SmallFiche open={open} />
+        
         </SimpleGrid>
       </div>
     </SimpleGrid>
