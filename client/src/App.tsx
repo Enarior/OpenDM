@@ -15,7 +15,7 @@ import {MantineProvider,  Center,  Button,  TextInput,  Card,  ColorScheme,  Col
 } from "@mantine/core";
 import { IconSun, IconMoonStars } from "@tabler/icons-react";
 import { useSessionStorage } from "@mantine/hooks";
-
+import { Text } from '@mantine/core';
 function App() {
   ////////////////////////////////***DARK THEME */
   //Dark mode qui se stocke dans le local storage
@@ -33,6 +33,10 @@ function App() {
   const [logged, setLogged] = useSessionStorage({
     key: "logged",
     defaultValue: false,
+  });
+  const [userLogged, setUserLogged] = useSessionStorage({
+    key: "username",
+    defaultValue: "",
   });
   ////////////////////////////////***ROUTING */
 
@@ -54,10 +58,11 @@ function App() {
         
         header={
           <Header height={60} p="xs" style={{display:"flex",flexDirection:"row",alignItems:"center"}}>
-            <Title order={1} style={{paddingRight:"79%"}} 
+            <Title order={1} style={{paddingRight:"76%"}} 
           variant="gradient"
           gradient={{ from: "orange", to: "red" }}
           >OpenDM</Title>
+          <Text style={{marginRight:"3%"}}>{userLogged}</Text>
             <Button
               variant="gradient"
               gradient={{ from: "orange", to: "red" }}

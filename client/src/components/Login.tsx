@@ -77,7 +77,7 @@ function Login() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ pseudo: pseudo, password: password1 }),
       };
-      console.log(requestOptions);
+      setUserLogged(username);
       const response = await fetch(
         "http://localhost:9000/api/register",
         requestOptions

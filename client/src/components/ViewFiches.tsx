@@ -38,7 +38,10 @@ import SmallFiche from "./SmallFiche";
 import { forwardRef } from "react";
 function ViewFiches(createFiche: any) {
   const [opened, { open, close }] = useDisclosure(false);
-
+  const [userLogged, setUserLogged] = useSessionStorage({
+    key: "username",
+    defaultValue: "",
+  });
   //Construction de l'autocomplete des classes
   const charactersList = [
     {
@@ -104,31 +107,34 @@ function ViewFiches(createFiche: any) {
   );
 
   //Call the API on /api/sheets to get a JSON of all the sheets of the user
-  
+  const getSheets = async () => {
+    try {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: userLogged}),
+      };
+
+      const response = await fetch(
+        "http://localhost:9000/api/sheets",
+        requestOptions
+      );
+
+      const data = response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    getSheets().then((data) => {
+      console.log(data);
+    });
+  }, []);
 
 
-  //Partie Inventaire
-  const initialValues: TransferListData = [
-    [
-      { value: 'react', label: 'React' },
-      { value: 'ng', label: 'Angular' },
-      { value: 'next', label: 'Next.js' },
-      { value: 'blitz', label: 'Blitz.js' },
-      { value: 'gatsby', label: 'Gatsby.js' },
-      { value: 'vue', label: 'Vue' },
-      { value: 'jq', label: 'jQuery' },
-    ],
-    [
-      { value: 'sv', label: 'Svelte' },
-      { value: 'rw', label: 'Redwood' },
-      { value: 'np', label: 'NumPy' },
-      { value: 'dj', label: 'Django' },
-      { value: 'fl', label: 'Flask' },
-    ],
-  ];
-
-
-  const [dataInventaire, setData] = useState<TransferListData>(initialValues);
   return (
     //retirer la di
 
