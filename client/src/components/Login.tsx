@@ -13,6 +13,7 @@ import {
 } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
+import { useHotkeys } from "@mantine/hooks";
 interface LoginProps {
   logged: boolean;
 }
@@ -34,7 +35,7 @@ function Login() {
   const [pseudo, setPseudo] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
-
+ 
   console.log(password1);
   console.log(password2);
 
@@ -69,6 +70,18 @@ function Login() {
       throw error;
     }
   };
+  useHotkeys([["Enter", () => {
+    console.log("enter");
+    login().then(async (res) => {
+      if (res.logged) {
+        setLogged(res.logged);
+        navigate("/home");
+      } else {
+        alert("wrong password");
+        navigate("/login");
+      }
+    });}
+    ]]);
   //REGISTER
   const SendRegister = async (): Promise<LoginProps> => {
     try {
