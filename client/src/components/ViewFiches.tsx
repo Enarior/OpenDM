@@ -36,6 +36,7 @@ import { create } from "domain";
 import { Ce } from "tabler-icons-react";
 import SmallFiche from "./SmallFiche";
 import { forwardRef } from "react";
+import { get } from "http";
 function ViewFiches(createFiche: any) {
   const [opened, { open, close }] = useDisclosure(false);
   const [userLogged, setUserLogged] = useSessionStorage({
@@ -127,11 +128,37 @@ function ViewFiches(createFiche: any) {
       throw error;
     }
   };
+  const getCountSheets = async () => {
+    try {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: userLogged}),
+      };
+
+      const response = await fetch(
+        "http://localhost:9000/api/sheets/count",
+        requestOptions
+      );
+
+      const data = response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
+  
 
   useEffect(() => {
     getSheets().then((data) => {
       console.log(data);
     });
+    getCountSheets().then((data) => {
+      console.log(data);
+    }
+    )
   }, []);
 
 

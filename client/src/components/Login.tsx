@@ -35,9 +35,6 @@ function Login() {
   const [pseudo, setPseudo] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
- 
-  console.log(password1);
-  console.log(password2);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -66,12 +63,10 @@ function Login() {
       const data = response.json();
       return data;
     } catch (error) {
-      console.error(error);
       throw error;
     }
   };
   useHotkeys([["Enter", () => {
-    console.log("enter");
     login().then(async (res) => {
       if (res.logged) {
         setLogged(res.logged);
