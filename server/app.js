@@ -71,10 +71,10 @@ app.post('/api/sheets', async function (req, res) {
 
   console.log("GET SHEETS");
 
-  const data = await queries.getSheets(req.body.username);
+  //const data = await queries.getSheets(req.body.username);
 
-  if (data) {
-    res.json(data);
+  if (true) {
+    res.json({nom:"toto",classe:"mage",race:"orc",level:"1"});
   } else {
     console.log("Erreur lors de la récupération des sheets");
   };
@@ -84,9 +84,9 @@ app.post('/api/sheets', async function (req, res) {
 app.post('/api/sheets/count', async function (req, res) {
   console.log("COUNT SHEETS");
 
-  const data = await queries.countSheets(req.body.username);
-  if (data) {
-    res.json({count : data});
+  //const data = await queries.countSheets(req.body.username);
+  if (true) {
+    res.json({count : 3});
   } else {
     console.log("Erreur lors du décompte des sheets");
   };
