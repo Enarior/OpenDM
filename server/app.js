@@ -30,7 +30,7 @@ app.post('/api/sheets/add', async function (req, res) {
 
   res.json({ logged: true });
   console.log("ADDING SHEET");
-  // use queries.addsheet()
+  use queries.addsheet()
   
   await queries.addSheet(req.body.name, req.body.level, req.body.classe, req.body.race,
                         req.body.hp, req.body.ca, req.body.sorts, req.body.STR, req.body.DEX,
@@ -71,10 +71,10 @@ app.post('/api/sheets', async function (req, res) {
 
   console.log("GET SHEETS");
 
-  //const data = await queries.getSheets(req.body.username);
+  const data = await queries.getSheets(req.body.username);
 
-  if (true) {
-    res.json({nom:"toto",classe:"mage",race:"orc",level:"1"});
+  if (data) {
+    res.json(data);
   } else {
     console.log("Erreur lors de la récupération des sheets");
   };
@@ -84,9 +84,9 @@ app.post('/api/sheets', async function (req, res) {
 app.post('/api/sheets/count', async function (req, res) {
   console.log("COUNT SHEETS");
 
-  //const data = await queries.countSheets(req.body.username);
-  if (true) {
-    res.json({count : 3});
+  const data = await queries.countSheets(req.body.username);
+  if (data) {
+    res.json(data);
   } else {
     console.log("Erreur lors du décompte des sheets");
   };
@@ -100,7 +100,7 @@ app.post('/api/sheets/update', async function (req, res) {
 
   res.json({ logged: true });
   console.log("UPDATE SHEET");
-  // use queries.addsheet()
+  use queries.addsheet()
   
   await queries.addSheet(req.body.name, req.body.level, req.body.classe, req.body.race,
                         req.body.hp, req.body.ca, req.body.sorts, req.body.STR, req.body.DEX,

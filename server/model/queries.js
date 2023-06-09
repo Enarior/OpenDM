@@ -24,6 +24,7 @@ module.exports = {
 	// ADD
 	//
 	addUser: async function (name, pass) {
+		mongooseStatus();
 		var user = new User({ username: name, password: pass });
 		console.log("Adding user : " + user.username + " " + user.password);
 
