@@ -30,7 +30,6 @@ app.post('/api/sheets/add', async function (req, res) {
 
   console.log("ADDING SHEET");
   //use queries.addsheet()
-  console.log(req.body);
   await queries.addSheet(req.body.name, req.body.level, req.body.classe, req.body.race,
     req.body.hp, req.body.ca, req.body.sorts, req.body.STR, req.body.DEX,
     req.body.CON, req.body.INT, req.body.WIS, req.body.CHA, req.body.username);
