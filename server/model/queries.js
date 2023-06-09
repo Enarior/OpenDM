@@ -49,7 +49,8 @@ module.exports = {
 			WIS : WIS,
 			CHA : CHA,
 			user : username})
-		console.log("Adding sheet : " + sheet.name + " " + sheet.hp + " " + sheet.mana + " for user : " + sheet.user);
+		console.log(sheet)
+		console.log("Adding sheet : " + sheet.name + " " + sheet.hp + " " + sheet.sorts + " for user : " + sheet.user);
 		
 		await sheet.save();
 	},

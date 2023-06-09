@@ -23,8 +23,8 @@ import { Global } from "@mantine/core";
 import "../App.css";
 
 
-function SmallFiche({open}:{open:any}) {
-  const items = [{ Level: "1" }, { Race: "gnome" }, { Classe: "mage" }].map(
+function SmallFiche({open,username,race,classe,level}:{open:any,username:String,classe:String,level:String,race:String}) {
+  const items = [{ Level: level }, { Race: race }, { Classe: classe }].map(
     (item, index) => (
       <Text>
         {Object.keys(item)[0]} : {Object.values(item)[0]}
@@ -43,7 +43,7 @@ function SmallFiche({open}:{open:any}) {
             paddingLeft: "2%",
           }}
         >
-          Pseudo
+         {username}
         </Title>
         <Flex
           mih={50}

@@ -28,13 +28,13 @@ app.post('/api/register', async function (req, res) {
 
 app.post('/api/sheets/add', async function (req, res) {
 
-  res.json({ logged: true });
   console.log("ADDING SHEET");
-  use queries.addsheet()
-  
+  //use queries.addsheet()
+  console.log(req.body);
   await queries.addSheet(req.body.name, req.body.level, req.body.classe, req.body.race,
-                        req.body.hp, req.body.ca, req.body.sorts, req.body.STR, req.body.DEX,
-                        req.body.CON, req.body.INT, req.body.WIS, req.body.CHA, req.body.username);
+    req.body.hp, req.body.ca, req.body.sorts, req.body.STR, req.body.DEX,
+    req.body.CON, req.body.INT, req.body.WIS, req.body.CHA, req.body.username);
+  res.json({ logged: true });
 });
 
 
@@ -100,7 +100,7 @@ app.post('/api/sheets/update', async function (req, res) {
 
   res.json({ logged: true });
   console.log("UPDATE SHEET");
-  use queries.addsheet()
+  //use queries.addsheet()
   
   await queries.addSheet(req.body.name, req.body.level, req.body.classe, req.body.race,
                         req.body.hp, req.body.ca, req.body.sorts, req.body.STR, req.body.DEX,

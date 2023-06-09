@@ -44,7 +44,36 @@ function ViewFiches(createFiche: any) {
     defaultValue: "",
   });
   const [count, setCount] = useState(0);
-  const [sheets,setSheets] = useState([]);
+  const [sheets, setSheets] = useState<any[]>([]);
+
+  //Hooks for creating a character by the modal
+  //Level
+  const [levelH, setlevelH] = useState<number | "">(0);
+  //Nom
+  const [nomH, setNomH] = useState("");
+  //Classe
+  const [classeH, setClasseH] = useState<string | null>(null);
+  //Race
+  const [raceH, setRaceH] = useState<string | null>(null);
+  //Force
+  const [forceH, setForceH] = useState<number | "">(0);
+  // Dextérité
+  const [dexteriteH, setDexteriteH] = useState<number | "">(0);
+  // Constitution
+  const [constitutionH, setConstitutionH] = useState<number | "">(0);
+  // Intelligence
+  const [intelligenceH, setIntelligenceH] = useState<number | "">(0);
+  //Sagesse
+  const [sagesseH, setSagesseH] = useState<number | "">(0);
+  // Charisme
+  const [charismeH, setCharismeH] = useState<number | "">(0);
+  // PV
+  const [pvH, setPvH] = useState<number | "">(0);
+  // CA
+  const [caH, setCaH] = useState<number | "">(0);
+  // Emplacement de sorts
+  const [emplacementSortH, setEmplacementSortH] = useState<number | "">(0);
+
   //Construction de l'autocomplete des classes
   const charactersList = [
     {
@@ -116,7 +145,7 @@ function ViewFiches(createFiche: any) {
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: user?.substring(1, user.length - 1)}),
+        body: JSON.stringify({ username: user?.substring(1, user.length - 1) }),
       };
 
       const response = await fetch(
@@ -137,7 +166,7 @@ function ViewFiches(createFiche: any) {
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: user?.substring(1, user.length - 1)}),
+        body: JSON.stringify({ username: user?.substring(1, user.length - 1) }),
       };
 
       const response = await fetch(
@@ -145,6 +174,40 @@ function ViewFiches(createFiche: any) {
         requestOptions
       );
 
+      const data = response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+  const createSheet = async () => {
+    try {
+      const user = window.sessionStorage.getItem("username");
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name : nomH,
+          level : levelH,
+          classe : classeH,
+          race : raceH,
+          hp : pvH,
+          ca : caH,
+          sorts : emplacementSortH,
+          STR : forceH,
+          DEX : dexteriteH,
+          CON : constitutionH,
+          INT : intelligenceH,
+          WIS : sagesseH,
+          CHA : charismeH,
+          username: user?.substring(1, user.length - 1),
+        }),
+      };
+      const response = await fetch(
+        "http://localhost:9000/api/sheets/add",
+        requestOptions
+      );
       const data = response.json();
       return data;
     } catch (error) {
@@ -161,18 +224,15 @@ function ViewFiches(createFiche: any) {
 
     getCountSheets().then((data) => {
       console.log(data);
-      setCount(data.count);
-    }
-    )
+      setCount(data);
+    });
   }, []);
   
-  
-
   return (
     //retirer la di
 
     <SimpleGrid cols={1} spacing="xl">
-      <Modal opened={opened} onClose={close} title="Fiche de perso" size="auto" >
+      <Modal opened={opened} onClose={close} title="Fiche de perso" size="auto">
         <SimpleGrid cols={1} spacing="xl">
           <Flex
             direction="row"
@@ -183,11 +243,14 @@ function ViewFiches(createFiche: any) {
             <TextInput
               label="Nom de l'aventurier"
               style={{ width: "25vh" }}
+              onChange={(event) => setNomH(event.currentTarget.value)}
             ></TextInput>
             <NumberInput
               label="Niveau"
               min={1}
+              defaultValue={1}
               style={{ width: "10vh", textAlign: "center" }}
+              onChange={setlevelH}
             />
           </Flex>
           <Flex justify={"space-between"}>
@@ -198,6 +261,7 @@ function ViewFiches(createFiche: any) {
               dropdownPosition="bottom"
               limit={15}
               data={data}
+              onChange={setClasseH}
             />
             <Autocomplete
               label="Votre race"
@@ -215,10 +279,11 @@ function ViewFiches(createFiche: any) {
                 "Gnome",
                 "Tiffelin",
               ]}
+              onChange={setRaceH}
             />
           </Flex>
           <Flex direction="row" justify="space-between" align="center">
-            <Card shadow="md" padding="md" radius="lg" withBorder >
+            <Card shadow="md" padding="md" radius="lg" withBorder>
               <SimpleGrid cols={2} spacing="xl">
                 <NumberInput
                   label="Force"
@@ -226,58 +291,76 @@ function ViewFiches(createFiche: any) {
                   min={1}
                   max={20}
                   style={{ width: "15vh", textAlign: "center" }}
+                  onChange={setForceH}
                 />
                 <NumberInput
                   label="Dextérité"
                   min={1}
                   max={20}
                   style={{ width: "15vh", textAlign: "center" }}
+                  onChange={setDexteriteH}
                 />
                 <NumberInput
                   label="Constitution"
                   min={1}
                   max={20}
                   style={{ width: "15vh", textAlign: "center" }}
+                  onChange={setConstitutionH}
                 />
                 <NumberInput
                   label="Intelligence"
                   min={1}
                   max={20}
                   style={{ width: "15vh", textAlign: "center" }}
+                  onChange={setIntelligenceH}
                 />
                 <NumberInput
                   label="Sagesse"
                   min={1}
                   max={20}
                   style={{ width: "15vh", textAlign: "center" }}
+                  onChange={setSagesseH}
                 />
                 <NumberInput
                   label="Charisme"
                   min={1}
                   max={20}
                   style={{ width: "15vh", textAlign: "center" }}
+                  onChange={setCharismeH}
                 />
               </SimpleGrid>
             </Card>
-            <Flex direction="column" style={{paddingLeft:"5%"}}>
+            <Flex direction="column" style={{ paddingLeft: "5%" }}>
               <NumberInput
                 label="PV"
                 min={1}
                 style={{ width: "15vh", textAlign: "center" }}
+                onChange={setPvH}
               />
               <NumberInput
                 label="CA"
                 min={1}
                 style={{ width: "15vh", textAlign: "center" }}
+                onChange={setCaH}
               />
               <NumberInput
                 label="Emplacements de sorts"
                 min={1}
                 style={{ width: "15vh", textAlign: "center" }}
+                onChange={setEmplacementSortH}
               />
             </Flex>
           </Flex>
-          <Button variant="gradient" gradient={{ from: "orange", to: "red" }}>Enregistrer</Button>
+          <Button
+            variant="gradient"
+            gradient={{ from: "orange", to: "red" }}
+            onClick={() => {
+              createSheet();
+              close();
+            }}
+          >
+            Enregistrer
+          </Button>
         </SimpleGrid>
       </Modal>
       <div>
@@ -297,7 +380,7 @@ function ViewFiches(createFiche: any) {
               fontSize: "7vh",
             }}
           >
-            My Characters
+            Mes personnages
           </Title>
           <Button
             variant="gradient"
@@ -312,7 +395,19 @@ function ViewFiches(createFiche: any) {
       </div>
       <div style={{}}>
         <SimpleGrid cols={3} spacing="xl">
-        
+          <>
+            {Object.keys(sheets).flatMap(function (key, value) {
+              return (
+                <SmallFiche
+                  open={open}
+                  username={sheets[value].username}
+                  race={sheets[value].race}
+                  classe={sheets[value].classe}
+                  level={sheets[value].level}
+                />
+              );
+            })}
+          </>
         </SimpleGrid>
       </div>
     </SimpleGrid>
