@@ -28,7 +28,12 @@ import {
   TransferList,
   TransferListData,
 } from "@mantine/core";
-import { SquarePlus, LayoutNavbarExpand, User } from "tabler-icons-react";
+import {
+  SquarePlus,
+  LayoutNavbarExpand,
+  User,
+  Refresh,
+} from "tabler-icons-react";
 import { useNavigate } from "react-router-dom";
 import { Global } from "@mantine/core";
 import "../App.css";
@@ -37,7 +42,7 @@ import { Ce } from "tabler-icons-react";
 import SmallFiche from "./SmallFiche";
 import { forwardRef } from "react";
 import { get } from "http";
-function ViewFiches(createFiche: any) {
+function ViewFiches({ setClicked }: { setClicked: any }) {
   const [opened, { open, close }] = useDisclosure(false);
   const [userLogged, setUserLogged] = useSessionStorage({
     key: "username",
@@ -46,9 +51,12 @@ function ViewFiches(createFiche: any) {
   const [count, setCount] = useState(0);
   const [sheets, setSheets] = useState<any[]>([]);
 
+  const [value, setValue] = useState();
+
   //Hooks for creating a character by the modal
   //Level
-  const [levelH, setlevelH] = useState<number | "">(0);
+  const [levelH, setlevelH] = useState<number | "">(1);
+  //setlevelH(1);
   //Nom
   const [nomH, setNomH] = useState("");
   //Classe
@@ -188,19 +196,19 @@ function ViewFiches(createFiche: any) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name : nomH,
-          level : levelH,
-          classe : classeH,
-          race : raceH,
-          hp : pvH,
-          ca : caH,
-          sorts : emplacementSortH,
-          STR : forceH,
-          DEX : dexteriteH,
-          CON : constitutionH,
-          INT : intelligenceH,
-          WIS : sagesseH,
-          CHA : charismeH,
+          name: nomH,
+          level: levelH,
+          classe: classeH,
+          race: raceH,
+          hp: pvH,
+          ca: caH,
+          sorts: emplacementSortH,
+          STR: forceH,
+          DEX: dexteriteH,
+          CON: constitutionH,
+          INT: intelligenceH,
+          WIS: sagesseH,
+          CHA: charismeH,
           username: user?.substring(1, user.length - 1),
         }),
       };
@@ -227,7 +235,7 @@ function ViewFiches(createFiche: any) {
       setCount(data);
     });
   }, []);
-  
+
   return (
     //retirer la di
 
@@ -357,6 +365,15 @@ function ViewFiches(createFiche: any) {
             onClick={() => {
               createSheet();
               close();
+              getSheets().then((data) => {
+                console.log(data);
+                setSheets(data);
+              });
+
+              getCountSheets().then((data) => {
+                console.log(data);
+                setCount(data);
+              });
             }}
           >
             Enregistrer
@@ -397,10 +414,11 @@ function ViewFiches(createFiche: any) {
         <SimpleGrid cols={3} spacing="xl">
           <>
             {Object.keys(sheets).flatMap(function (key, value) {
+              console.log(sheets[value].name);
               return (
                 <SmallFiche
                   open={open}
-                  username={sheets[value].username}
+                  username={sheets[value].name}
                   race={sheets[value].race}
                   classe={sheets[value].classe}
                   level={sheets[value].level}

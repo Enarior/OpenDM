@@ -44,20 +44,6 @@ function HomeWelcome({setClicked,setCreateFiche} : {setClicked:any,setCreateFich
         >
           Voir mes fiches
         </Button>
-
-        <Button
-          variant="white"
-          color="yellow"
-          radius="md"
-          size="xl"
-          leftIcon={
-            <LayoutNavbarExpand size={40} strokeWidth={2.5} color={"#4d4a19"} />
-          }
-          style={{fontFamily:"font_medieval",fontSize:"1.5rem"}}
-          onClick={() =>{setClicked(true);setCreateFiche(true)} }
-        >
-          Créer une fiche
-        </Button>
       </Flex>
     </div>
   );

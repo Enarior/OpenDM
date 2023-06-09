@@ -51,7 +51,7 @@ function Home() {
       {!clicked ? (
         <HomeWelcome setClicked={setClicked} setCreateFiche={setCreateFiche} />
       ) : (
-        <ViewFiches createFiche={createFiche} />
+        <ViewFiches setClicked={setClicked} />
       )}
     </div>
   );
