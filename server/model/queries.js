@@ -4,10 +4,28 @@ const sheetSchema = require('./sheet.js');
 const mongoose = require("mongoose");
 const PORT = 27017;
 const DB_NAME = "kmn";
-var connection = mongoose.createConnection(`mongodb://localhost:${PORT}/${DB_NAME}`);
+//var connection = mongoose.createConnection(`mongodb://localhost:${PORT}/${DB_NAME}`);
+//const User = connection.model('User', userSchema);
+//const Sheet = connection.model('Sheet', sheetSchema);
 
-const User = connection.model('User', userSchema);
-const Sheet = connection.model('Sheet', sheetSchema);
+var User;
+var Sheet;
+
+async function connect(){
+	try {
+	var connection = await mongoose.connect('mongodb://localhost:27017/test');
+	User = mongoose.model('User', userSchema);
+	Sheet = mongoose.model('Sheet', sheetSchema);
+  } catch (error) {
+	handleError(error);
+  }
+}
+connect();
+
+
+
+
+
 
 //Debug mongoose
 function mongooseStatus() {
