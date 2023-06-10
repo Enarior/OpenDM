@@ -16,6 +16,10 @@ function Home() {
   const [logged, setLogged] = useSessionStorage({
     key: "logged",
   });
+  const [userLogged, setUserLogged] = useSessionStorage({
+    key: "username",
+    defaultValue: "",
+  });
   const navigate = useNavigate();
 
   const [clicked, setClicked] = useState(false);
@@ -33,6 +37,7 @@ function Home() {
           label="Etre rédirigé vers la page de connexion"
           icon={<IconAlertTriangle size="1rem" stroke={1.5} />}
           onClick={() => {
+            setUserLogged("");
             navigate("/login");
           }}
         />

@@ -23,7 +23,7 @@ import { Global } from "@mantine/core";
 import "../App.css";
 
 
-function SmallFiche({open,username,race,classe,level}:{open:any,username:String,classe:String,level:String,race:String}) {
+function SmallFiche({open,openEdit,openUsername,username,race,classe,level,}:{open:any,openEdit:any,openUsername:any,username:String,classe:String,level:String,race:String}) {
   const items = [{ Level: level }, { Race: race }, { Classe: classe }].map(
     (item, index) => (
       <Text>
@@ -69,8 +69,8 @@ function SmallFiche({open,username,race,classe,level}:{open:any,username:String,
           <Button
           variant="gradient"
           gradient={{ from: "orange", to: "red" }}
-          onClick={() => open()}
-          >Edit</Button>
+          onClick={() =>{open(true);openEdit(true);openUsername(username)}}
+          >View</Button>
           <Button
           variant="gradient"
           gradient={{ from: "#ff0000", to: "red" }}

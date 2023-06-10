@@ -43,26 +43,27 @@ import SmallFiche from "./SmallFiche";
 import { forwardRef } from "react";
 import { get } from "http";
 function ViewFiches({ setClicked }: { setClicked: any }) {
-  const [opened, { open, close }] = useDisclosure(false);
   const [userLogged, setUserLogged] = useSessionStorage({
     key: "username",
     defaultValue: "",
   });
   const [count, setCount] = useState(0);
   const [sheets, setSheets] = useState<any[]>([]);
-
-  const [value, setValue] = useState();
+  const [opened, { open, close }] = useDisclosure(false);
+  const [openEdit, setOpenEdit] = useState(false);
+  const [openUsername, setOpenUsername] = useState("");
 
   //Hooks for creating a character by the modal
+  //SECTION 1/******
   //Level
   const [levelH, setlevelH] = useState<number | "">(1);
   //setlevelH(1);
   //Nom
   const [nomH, setNomH] = useState("");
   //Classe
-  const [classeH, setClasseH] = useState<string | null>(null);
+  const [classeH, setClasseH] = useState<string>("");
   //Race
-  const [raceH, setRaceH] = useState<string | null>(null);
+  const [raceH, setRaceH] = useState<string>("");
   //Force
   const [forceH, setForceH] = useState<number | "">(0);
   // Dextérité
@@ -81,7 +82,7 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
   const [caH, setCaH] = useState<number | "">(0);
   // Emplacement de sorts
   const [emplacementSortH, setEmplacementSortH] = useState<number | "">(0);
-
+  ///END SECTION 1/******
   //Construction de l'autocomplete des classes
   const charactersList = [
     {
@@ -236,12 +237,12 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
     });
   }, []);
 
-//Comment activer l'édition du modal
-//mettre un hook pour savoir qu'elle fiche est selectionnée
-//Faut trouver un moyen dans quelle json on va chercher les infos
-//ensuuite, dans le modal , on fais un if pour savoir si on a cliqué sur le bouton edit
-//si oui, on donne la valeur du json
-
+  //Comment activer l'édition du modal
+  //mettre un hook pour savoir qu'elle fiche est selectionnée
+  //Faut trouver un moyen dans quelle json on va chercher les infos
+  //ensuuite, dans le modal , on fais un if pour savoir si on a cliqué sur le bouton edit
+  //si oui, on donne la valeur du json
+  var actualSheet = sheets[0];
 
   return (
     //retirer la di
@@ -259,6 +260,7 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
               label="Nom de l'aventurier"
               style={{ width: "25vh" }}
               onChange={(event) => setNomH(event.currentTarget.value)}
+              value={openEdit ? openUsername : ""}
             ></TextInput>
             <NumberInput
               label="Niveau"
@@ -266,6 +268,7 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
               defaultValue={1}
               style={{ width: "10vh", textAlign: "center" }}
               onChange={setlevelH}
+              value={openEdit ? actualSheet.level : ""}
             />
           </Flex>
           <Flex justify={"space-between"}>
@@ -277,6 +280,7 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
               limit={15}
               data={data}
               onChange={setClasseH}
+              value={openEdit ? actualSheet.classe : ""}
             />
             <Autocomplete
               label="Votre race"
@@ -295,6 +299,7 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
                 "Tiffelin",
               ]}
               onChange={setRaceH}
+              value={openEdit ? actualSheet.race : ""}
             />
           </Flex>
           <Flex direction="row" justify="space-between" align="center">
@@ -307,6 +312,7 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
                   max={20}
                   style={{ width: "15vh", textAlign: "center" }}
                   onChange={setForceH}
+                  value={openEdit ? actualSheet.STR : ""}
                 />
                 <NumberInput
                   label="Dextérité"
@@ -314,6 +320,7 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
                   max={20}
                   style={{ width: "15vh", textAlign: "center" }}
                   onChange={setDexteriteH}
+                  value={openEdit ? actualSheet.DEX : ""}
                 />
                 <NumberInput
                   label="Constitution"
@@ -321,6 +328,7 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
                   max={20}
                   style={{ width: "15vh", textAlign: "center" }}
                   onChange={setConstitutionH}
+                  value={openEdit ? actualSheet.CON : ""}
                 />
                 <NumberInput
                   label="Intelligence"
@@ -328,6 +336,7 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
                   max={20}
                   style={{ width: "15vh", textAlign: "center" }}
                   onChange={setIntelligenceH}
+                  value={openEdit ? actualSheet.INT : ""}
                 />
                 <NumberInput
                   label="Sagesse"
@@ -335,6 +344,7 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
                   max={20}
                   style={{ width: "15vh", textAlign: "center" }}
                   onChange={setSagesseH}
+                  value={openEdit ? actualSheet.WIS : ""}
                 />
                 <NumberInput
                   label="Charisme"
@@ -342,6 +352,7 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
                   max={20}
                   style={{ width: "15vh", textAlign: "center" }}
                   onChange={setCharismeH}
+                  value={openEdit ? actualSheet.CHA : ""}
                 />
               </SimpleGrid>
             </Card>
@@ -351,18 +362,21 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
                 min={1}
                 style={{ width: "15vh", textAlign: "center" }}
                 onChange={setPvH}
+                value={openEdit ? actualSheet.hp : ""}
               />
               <NumberInput
                 label="CA"
                 min={1}
                 style={{ width: "15vh", textAlign: "center" }}
                 onChange={setCaH}
+                value={openEdit ? actualSheet.ca : ""}
               />
               <NumberInput
                 label="Emplacements de sorts"
                 min={1}
                 style={{ width: "15vh", textAlign: "center" }}
                 onChange={setEmplacementSortH}
+                value={openEdit ? actualSheet.sorts : ""}
               />
             </Flex>
           </Flex>
@@ -410,7 +424,10 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
             variant="gradient"
             gradient={{ from: "orange", to: "red" }}
             style={{ marginRight: "1%" }}
-            onClick={() => open()}
+            onClick={() => {
+              open();
+              setOpenEdit(false);
+            }}
           >
             Créer un nouveau personnage
           </Button>
@@ -425,6 +442,8 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
               return (
                 <SmallFiche
                   open={open}
+                  openEdit={setOpenEdit}
+                  openUsername={setOpenUsername}
                   username={sheets[value].name}
                   race={sheets[value].race}
                   classe={sheets[value].classe}
