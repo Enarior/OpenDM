@@ -214,7 +214,6 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
           username: user?.substring(1, user.length - 1),
         }),
       };
-      console.log(requestOptions)
       const response = await fetch(
         "http://localhost:9000/api/sheets/add",
         requestOptions
@@ -226,7 +225,9 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
       throw error;
     }
   };
-  
+  function ko(){
+    return true
+  }
   useEffect(() => {
     getSheets().then((data) => {
       setSheets(data);
@@ -260,9 +261,6 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
     }
   });
 
-
-// on va utiliser le openEdit pour mettre les valeurs dans les hooks afin de pouvoir modifier les valeurs
-
  
   return (
     //retirer la di
@@ -280,15 +278,15 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
               label="Nom de l'aventurier"
               style={{ width: "25vh" }}
               onChange={(event) => setNomH(event.currentTarget.value)}
-              value={nomH}
+              value={openEdit ? actualSheet.name : nomH}
             ></TextInput>
             <NumberInput
               label="Niveau"
               min={1}
               defaultValue={1}
               style={{ width: "10vh", textAlign: "center" }}
-              onChange={setlevelH}
-              value={levelH}
+              onChange={openEdit ? ko:setlevelH}
+              value={openEdit ? actualSheet.level : levelH}
             />
           </Flex>
           <Flex justify={"space-between"}>
@@ -299,8 +297,8 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
               dropdownPosition="bottom"
               limit={15}
               data={data}
-              onChange={setClasseH}
-              value={classeH}
+              onChange={openEdit ? ko:setClasseH}
+              value={openEdit ? actualSheet.classe : classeH}
             />
             <Autocomplete
               label="Votre race"
@@ -318,8 +316,8 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
                 "Gnome",
                 "Tiffelin",
               ]}
-              onChange={setRaceH}
-              value={raceH}
+              onChange={openEdit ? ko:setRaceH}
+              value={openEdit ? actualSheet.race : raceH}
             />
           </Flex>
           <Flex direction="row" justify="space-between" align="center">
@@ -331,48 +329,48 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
                   min={1}
                   max={20}
                   style={{ width: "15vh", textAlign: "center" }}
-                  onChange={setForceH}
-                  value={forceH}
+                  onChange={openEdit ? ko:setForceH}
+                  value={openEdit ? actualSheet.STR : forceH}
                 />
                 <NumberInput
                   label="Dextérité"
                   min={1}
                   max={20}
                   style={{ width: "15vh", textAlign: "center" }}
-                  onChange={setDexteriteH}
-                  value={dexteriteH}
+                  onChange={openEdit ? ko:setDexteriteH}
+                  value={openEdit ? actualSheet.DEX : dexteriteH}
                 />
                 <NumberInput
                   label="Constitution"
                   min={1}
                   max={20}
                   style={{ width: "15vh", textAlign: "center" }}
-                  onChange={setConstitutionH}
-                  value={constitutionH}
+                  onChange={openEdit ? ko:setConstitutionH}
+                  value={openEdit ? actualSheet.CON : constitutionH}
                 />
                 <NumberInput
                   label="Intelligence"
                   min={1}
                   max={20}
                   style={{ width: "15vh", textAlign: "center" }}
-                  onChange={setIntelligenceH}
-                  value={intelligenceH}
+                  onChange={openEdit ? ko:setIntelligenceH}
+                  value={openEdit ? actualSheet.INT : intelligenceH}
                 />
                 <NumberInput
                   label="Sagesse"
                   min={1}
                   max={20}
                   style={{ width: "15vh", textAlign: "center" }}
-                  onChange={setSagesseH}
-                  value={sagesseH}
+                  onChange={openEdit ? ko:setSagesseH}
+                  value={openEdit ? actualSheet.WIS : sagesseH}
                 />
                 <NumberInput
                   label="Charisme"
                   min={1}
                   max={20}
                   style={{ width: "15vh", textAlign: "center" }}
-                  onChange={setCharismeH}
-                  value={charismeH}
+                  onChange={openEdit ? ko:setCharismeH}
+                  value={openEdit ? actualSheet.CHA : charismeH}
                 />
               </SimpleGrid>
             </Card>
@@ -381,22 +379,22 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
                 label="PV"
                 min={1}
                 style={{ width: "15vh", textAlign: "center" }}
-                onChange={setPvH}
-                value={pvH}
+                onChange={openEdit ? ko:setPvH}
+                value={openEdit ? actualSheet.hp : pvH}
               />
               <NumberInput
                 label="CA"
                 min={1}
                 style={{ width: "15vh", textAlign: "center" }}
-                onChange={setCaH}
-                value={caH}
+                onChange={openEdit ? ko: setCaH}
+                value={openEdit ? actualSheet.ca : caH}
               />
               <NumberInput
                 label="Emplacements de sorts"
                 min={1}
                 style={{ width: "15vh", textAlign: "center" }}
-                onChange={setEmplacementSortH}
-                value={emplacementSortH}
+                onChange={openEdit ? ko:setEmplacementSortH}
+                value={openEdit ? actualSheet.sorts : emplacementSortH}
               />
             </Flex>
           </Flex>
