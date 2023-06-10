@@ -110,9 +110,10 @@ app.post('/api/sheets/update', async function (req, res) {
 //DELETE
 //
 
-app.get('/api/sheets/delete', async function (req, res) {
-
+app.post('/api/sheets/delete', async function (req, res) {
+  console.log(req.body.name);
   await queries.deleteSheet(req.body.name);
+  res.json({ deleted: true });
 });
 
 app.listen(3001, function () {

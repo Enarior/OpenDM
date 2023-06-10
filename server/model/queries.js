@@ -119,7 +119,8 @@ module.exports = {
 		const res = await User.deleteOne({ username: username });
 		console.log("Removed user, response : " + res);
 	},
-	removeSheet: async function (name) {
+	deleteSheet: async function (name) {
+		console.log("Removing sheet : " + name);
 		const res = await Sheet.deleteOne({ name : name });
 		console.log("Removed sheet, response : " + res);
 	}

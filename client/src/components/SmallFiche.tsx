@@ -23,7 +23,7 @@ import { Global } from "@mantine/core";
 import "../App.css";
 
 
-function SmallFiche({open,openEdit,openUsername,username,race,classe,level,}:{open:any,openEdit:any,openUsername:any,username:String,classe:String,level:String,race:String}) {
+function SmallFiche({open,openEdit,openUsername,username,race,classe,level,setReloadDelete}:{open:any,openEdit:any,openUsername:any,username:String,classe:String,level:String,race:String,setReloadDelete:any}) {
   const items = [{ Level: level }, { Race: race }, { Classe: classe }].map(
     (item, index) => (
       <Text>
@@ -31,6 +31,26 @@ function SmallFiche({open,openEdit,openUsername,username,race,classe,level,}:{op
       </Text>
     )
   );
+  const deleteSheets = async () => {
+    try {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: username }),
+      };
+      console.log(username);
+      const response = await fetch(
+        "http://localhost:9000/api/sheets/delete",
+        requestOptions
+      );
+
+      const data = response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder style={{}} variant="gradien">
       <Card.Section>
@@ -74,6 +94,7 @@ function SmallFiche({open,openEdit,openUsername,username,race,classe,level,}:{op
           <Button
           variant="gradient"
           gradient={{ from: "#ff0000", to: "red" }}
+          onClick={() =>{deleteSheets();setReloadDelete(true)}}
           >Delete</Button>
         </Flex>
       </Card.Section>
