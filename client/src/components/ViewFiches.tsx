@@ -236,6 +236,13 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
     });
   }, []);
 
+//Comment activer l'édition du modal
+//mettre un hook pour savoir qu'elle fiche est selectionnée
+//Faut trouver un moyen dans quelle json on va chercher les infos
+//ensuuite, dans le modal , on fais un if pour savoir si on a cliqué sur le bouton edit
+//si oui, on donne la valeur du json
+
+
   return (
     //retirer la di
 
