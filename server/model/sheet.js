@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+//Schéma MongoDB d'une feuille de personnage
 const sheetSchema = new mongoose.Schema({
 	name: String,
 	level: Number,
@@ -16,7 +17,5 @@ const sheetSchema = new mongoose.Schema({
 	CHA : Number,
 	user : String
 });
-
-//const sheetModel = mongoose.model('Sheet', sheetSchema);
 
 module.exports = sheetSchema;

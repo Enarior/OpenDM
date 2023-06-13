@@ -1,3 +1,7 @@
+/*
+Backend principal de l'application
+Chaque endpoint fait une requête à la base de données en utilisant le fichier queries.js
+*/
 var express = require('express');
 var app = express();
 var path = require('path');
@@ -14,10 +18,13 @@ app.use(cors());
 //
 //ADD
 //
+
+// Jamais utilisé puisque react redirige vers /api/register
 app.post("/", function (req, res) {
   console.log("Hello World!");
 });
 
+//Ajout d'un utilisateur
 app.post('/api/register', async function (req, res) {
 
   console.log(req.body);
@@ -26,6 +33,7 @@ app.post('/api/register', async function (req, res) {
   res.send({ logged : true });
 });
 
+//Ajout d'une feuille de personnage
 app.post('/api/sheets/add', async function (req, res) {
 
   console.log("ADDING SHEET");
@@ -40,6 +48,7 @@ app.post('/api/sheets/add', async function (req, res) {
 //
 //GET
 //
+//Connexion
 app.post('/api/login', async function (req, res) {
 
   console.log(req.body);
@@ -53,6 +62,7 @@ app.post('/api/login', async function (req, res) {
   };
 });
 
+//Récupération des données d'un utilisateur
 app.get('/api/user', async function (req, res) {
 
   console.log(req.body);
@@ -66,6 +76,7 @@ app.get('/api/user', async function (req, res) {
   };
 });
 
+//Récupération de toutes les feuilles de personnage d'un utilisateur
 app.post('/api/sheets', async function (req, res) {
 
   console.log("GET SHEETS");
@@ -79,7 +90,7 @@ app.post('/api/sheets', async function (req, res) {
   };
 });
 
-
+//Récupération du nombre de fiches de personnage d'un utilisateur
 app.post('/api/sheets/count', async function (req, res) {
   console.log("COUNT SHEETS");
 
@@ -95,6 +106,7 @@ app.post('/api/sheets/count', async function (req, res) {
 //UPDATE
 //
 
+//Modification d'une feuille de personnage
 app.post('/api/sheets/update', async function (req, res) {
 
   res.json({ logged: true });
@@ -110,15 +122,16 @@ app.post('/api/sheets/update', async function (req, res) {
 //DELETE
 //
 
+//Suppression d'une feuille de personnage
 app.post('/api/sheets/delete', async function (req, res) {
   console.log(req.body.name);
   await queries.deleteSheet(req.body.name);
   res.json({ deleted: true });
 });
 
+//Lancement du serveur
 app.listen(3001, function () {
   console.log("Express server is running");
 });
-
 
 module.exports = app;

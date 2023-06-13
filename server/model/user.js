@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 
+//Schéma MongoDB d'un utilisateur
 const userSchema = new mongoose.Schema({
 	username: String,
 	password: String
 });
-
-//const userModel = mongoose.model('User', userSchema);
 
 module.exports = userSchema;

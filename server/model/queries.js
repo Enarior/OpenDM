@@ -1,10 +1,14 @@
+/*
+Requêtes 
+*/
+
+//Connexion à la base de données et définition des modèles
 const userSchema = require('./user.js');
 const sheetSchema = require('./sheet.js');
 
 const mongoose = require("mongoose");
 const PORT = 27017;
 const DB_NAME = "kmn";
-
 
 var connection = mongoose.createConnection(`mongodb://127.0.0.1:${PORT}/${DB_NAME}`);
 const User = connection.model('User', userSchema);
@@ -25,6 +29,7 @@ module.exports = {
 	//
 	// ADD
 	//
+	//Ajout d'un utilisateur
 	addUser: async function (name, pass) {
 		mongooseStatus();
 		var user = new User({ username: name, password: pass });
@@ -32,7 +37,7 @@ module.exports = {
 
 		await user.save();
 	},
-
+	//Ajout d'une feuille de personnage
 	addSheet: async function (name, level, classe, race, hp, ca, sorts, STR, DEX, CON, INT, WIS, CHA, username) {
 		var sheet = new Sheet({
 			name : name,
@@ -57,6 +62,7 @@ module.exports = {
 	//
 	// GET
 	//
+	//Récupération d'un utilisateur
 	getUser: async function (username) {
 		const user = await User.findOne({ username: username });
 
@@ -65,6 +71,7 @@ module.exports = {
 			return user;
 		}
 	},
+	//Récupération d'une feuille de personnage
 	getSheet: async function (name) {
 		const sheet = await Sheet.findOne({ name : name });
 
@@ -73,12 +80,12 @@ module.exports = {
 			return sheet;
 		}
 	},
-
+	//Récupération de toutes les feuilles de personnage d'un utilisateur
 	getSheets: async function (username){
 		const sheets = Sheet.find({user : username});
 		return(sheets);
 	},
-	
+	//Récupération du nombre de feuilles de personnage d'un utilisateur
 	countSheets: async function (username){
 		const count = Sheet.count({user : username});
 
@@ -88,11 +95,13 @@ module.exports = {
 	//
 	// UPDATE
 	//
+	//Modification d'un utilisateur
 	updateUser: async function (username, newUsername, newPassword) {
 		const res = await Person.updateOne({ username: username}, { username: newUsername, password: newPassword });
 
 		console.log("Updated user : " + res);
 	},
+	//Modification d'une feuille de personnage
 	updateSheet: async function (name, level, classe, race, hp, ca, sorts, STR, DEX, CON, INT, WIS, CHA, username) {
 		console.log("Adding sheet : " + sheet.name + " " + sheet.hp + " " + sheet.mana + " for user : " + sheet.user);
 		const res = await Sheet.updateOne({name : name},{
@@ -115,10 +124,12 @@ module.exports = {
 	//
 	//REMOVE
 	//
+	//Suppression d'un utilisateur
 	removeUser: async function (username) {
 		const res = await User.deleteOne({ username: username });
 		console.log("Removed user, response : " + res);
 	},
+	//Suppression d'une feuille de personnage
 	deleteSheet: async function (name) {
 		console.log("Removing sheet : " + name);
 		const res = await Sheet.deleteOne({ name : name });
