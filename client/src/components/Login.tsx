@@ -66,6 +66,7 @@ function Login() {
       throw error;
     }
   };
+  //Raccourci clavier pour se connecter
   useHotkeys([["Enter", () => {
     login().then(async (res) => {
       if (res.logged) {
@@ -98,10 +99,11 @@ function Login() {
       throw error;
     }
   };
-
+  //Hook pour faire apparaitre la modal
   const [opened, { open, close }] = useDisclosure(false);
   return (
     <>
+    {/** Formulaire d'inscription */}
       <Modal
         opened={opened}
         onClose={close}
@@ -202,7 +204,7 @@ function Login() {
           <Button
             variant="gradient"
             gradient={{ from: "orange", to: "red" }}
-            style={{ marginBottom: "6%" }}
+            style={{ marginBottom: "2%" }}
             onClick={() => {
               login().then(async (res) => {
                 if (res.logged) {

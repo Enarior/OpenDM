@@ -51,9 +51,17 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
   const [sheets, setSheets] = useState<any[]>([]);
   const [opened, { open, close }] = useDisclosure(false);
   const [openEdit, setOpenEdit] = useState(false);
+  /*
+Fonctionn du openEdit
+
+L'openEdit permet d'ouvrir de création de personnage mais en remplissant les valeurs,
+Ce qui permet de visualiser sa fiche de personnage entièrement.
+Cela permet d'éviter une duplication de code en réutilisant le même composant.
+
+  */
   const [openUsername, setOpenUsername] = useState("");
   const [reloadDelete, setReloadDelete] = useState(false);
-
+/**le hook reloadDelete est là pour faire refresh la page afin d'afficher la nouvelle fiche de personnage lors de l'ajout de celle-ci */
   //Hooks for creating a character by the modal
   //SECTION 1/******
   //Level
@@ -170,6 +178,7 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
       throw error;
     }
   };
+  //Call the API on /api/sheets/count to get the number of sheets of the user
   const getCountSheets = async () => {
     try {
       const user = window.sessionStorage.getItem("username");
@@ -191,6 +200,7 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
       throw error;
     }
   };
+  //Call the API on /api/sheets/create to create a new sheet
   const createSheet = async () => {
     try {
       const user = window.sessionStorage.getItem("username");
@@ -248,23 +258,18 @@ function ViewFiches({ setClicked }: { setClicked: any }) {
     });
     setReloadDelete(false);
   }, [reloadDelete]);
-  //Comment activer l'édition du modal
-  //mettre un hook pour savoir qu'elle fiche est selectionnée
-  //Faut trouver un moyen dans quelle json on va chercher les infos
-  //ensuuite, dans le modal , on fais un if pour savoir si on a cliqué sur le bouton edit
-  //si oui, on donne la valeur du json
+  //Tableau qui sert a stocker tous les jsons des fiches d'un utilisateur
   var actualSheet :any = [];
-
   Object.keys(sheets).flatMap(function (key, value) {
     if (sheets[value].name === openUsername) {
       actualSheet = sheets[value];
     }
   });
 
- 
-  return (
-    //retirer la di
 
+
+  return (
+    //retirer la div pour mettre le modal
     <SimpleGrid cols={1} spacing="xl">
       <Modal opened={opened} onClose={close} title="Fiche de perso" size="auto">
         <SimpleGrid cols={1} spacing="xl">

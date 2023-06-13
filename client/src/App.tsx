@@ -87,6 +87,9 @@ function App() {
       >
         <Router>
           <Routes>
+            {/** Redirection automatique vers la page de login lorsque l'utilisateur n'est pas connecté ou vers la page de home lorsque l'utilisateur
+             * est connecté
+             */}
             <Route path="/" element={<Navigate to="login"/>} />
             <Route path="/login" element={<Login />} />
             <Route path="/home" element={<Home />} />

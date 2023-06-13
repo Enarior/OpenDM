@@ -27,6 +27,7 @@ function Home() {
     
 
   if (!logged) {
+    //Page de redirection si l'utilisateur n'est pas connecté
     return (
       <>
         <Text>
@@ -53,6 +54,7 @@ function Home() {
         height: "100%",
       }}
     >
+      {/** on regarde la valeur du hook pour savoir si on affiche la page d'accueil ou bien la page de visualisation des fiches */}
       {!clicked ? (
         <HomeWelcome setClicked={setClicked} setCreateFiche={setCreateFiche} />
       ) : (
